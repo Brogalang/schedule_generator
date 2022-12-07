@@ -1,0 +1,36 @@
+<meta charset="UTF-8">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+<title>Schedule Maker</title>
+
+<!-- General CSS Files -->
+<link rel="stylesheet" href="{{asset('assets/modules/bootstrap/css/bootstrap.min.css')}}">
+<link rel="stylesheet" href="{{asset('assets/modules/fontawesome/css/all.min.css')}}">
+
+<!-- CSS Libraries -->
+<link rel="stylesheet" href="{{asset('assets/modules/bootstrap-social/bootstrap-social.css')}}">
+<!-- Template CSS -->
+<link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+<link rel="stylesheet" href="{{asset('assets/css/components.css')}}">
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.3.0/css/flag-icon.min.css"> -->
+<!-- Start GA -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-94034622-3');
+</script>
+
+<style type=text/css>
+        .freezetbl {
+            position: relative;
+            max-height: 350px;
+        }
+        .freezetbl thead {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        }
+    </style>
