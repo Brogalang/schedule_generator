@@ -12,19 +12,31 @@
 <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/components.css')}}">
 
- <!-- Select2 -->
- <link rel="stylesheet" href="{{asset('assets/modules/select2/dist/css/select2.min.css')}}">
- <link rel="stylesheet" href="{{asset('assets/modules/select2/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
+<!-- Select2 -->
+<link rel="stylesheet" href="{{asset('assets/modules/select2/dist/css/select2.min.css')}}">
+<link rel="stylesheet" href="{{asset('assets/modules/select2/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
 
-  <!-- CSS Libraries -->
-  <link rel="stylesheet" href="{{asset('assets/modules/bootstrap-daterangepicker/daterangepicker.css')}}">
-  <link rel="stylesheet" href="{{asset('assets/modules/jquery-selectric/selectric.css')}}">
-  <link rel="stylesheet" href="{{asset('assets/modules/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}">
-  <link rel="stylesheet" href="{{asset('assets/modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css')}}">
+<!-- CSS Libraries -->
+<link rel="stylesheet" href="{{asset('assets/modules/bootstrap-daterangepicker/daterangepicker.css')}}">
+<link rel="stylesheet" href="{{asset('assets/modules/jquery-selectric/selectric.css')}}">
+<link rel="stylesheet" href="{{asset('assets/modules/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}">
+<link rel="stylesheet" href="{{asset('assets/modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css')}}">
 
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.3.0/css/flag-icon.min.css"> -->
 <!-- Start GA -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
+
+<!-- CSS Libraries -->
+<link rel="stylesheet" href="{{asset('assets/modules/datatables/datatables.min.css')}}">
+<link rel="stylesheet" href="{{asset('assets/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css')}}">
+<link rel="stylesheet" href="{{asset('assets/modules/datatables/Select-1.2.4/css/select.bootstrap4.min.css')}}">
+
+<!-- include the style -->
+<link rel="stylesheet" href="{{asset('alertifyjs/css/alertify.min.css')}}" />
+<!-- include a theme -->
+<link rel="stylesheet" href="{{asset('alertifyjs/css/themes/default.min.css')}}" />
+
+
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}

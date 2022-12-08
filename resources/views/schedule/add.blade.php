@@ -87,16 +87,22 @@
         <!--Table untuk show Divisi-->
         <label>Table Karyawan Divisi</label>
         <div class="table-responsive">
-            <table class="table table-bordered table-md">
-                <tr>
-                    <th>No</th>
+            <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                <thead>                                 
+                    <tr>
+                    <th class="text-center">No</th>
                     <th>Nama Karyawan</th>
                     <th>Level Karyawan</th>
-                </tr>
-                <tbody id="showdiv">
-
+                    </tr>
+                </thead>
+                <tbody id="showdiv">        
+                
                 </tbody>
-            </table>
+                </table>
+            </div>
+            </div>
         </div>
     </div>
     </form>

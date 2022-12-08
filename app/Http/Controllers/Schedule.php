@@ -24,19 +24,20 @@ class Schedule extends Controller
         $schedule =  DB::table('schedule')
                     ->select('schedule.bulan_scheduler as bulan_scheduler','divisi.nama_divisi as nama_divisi','schedule.id as id')
                     ->join('divisi', 'divisi.id', '=', 'schedule.divisi_scheduler')
-                    ->paginate(10);
-        $lvl1 =  DB::table('schedule')->join('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule_detail.tanda','=','1')->get();
-        $lvl2 =  DB::table('schedule')->join('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule_detail.tanda','=','2')->get();
-        $lvl3 =  DB::table('schedule')->join('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule_detail.tanda','=','3')->get();
-        $lvl4 =  DB::table('schedule')->join('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule_detail.tanda','=','4')->get();
-        $lvl5 =  DB::table('schedule')->join('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule_detail.tanda','=','5')->get();
-        $hlvl1 = $lvl1->count();
-        $hlvl2 = $lvl2->count();
-        $hlvl3 = $lvl3->count();
-        $hlvl4 = $lvl4->count();
-        $hlvl5 = $lvl5->count();
+                    ->orderby('divisi.id','ASC')
+                    ->orderby('schedule.bulan_scheduler','ASC')
+                    ->get();
+        foreach ($schedule as $key => $value) {
+            $hlvl1[$value->id] =  DB::table('schedule')->join('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule_detail.tanda','=','1')->where('schedule.id','=',$value->id)->count();
+            $hlvl2[$value->id] =  DB::table('schedule')->join('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule_detail.tanda','=','2')->where('schedule.id','=',$value->id)->count();
+            $hlvl3[$value->id] =  DB::table('schedule')->join('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule_detail.tanda','=','3')->where('schedule.id','=',$value->id)->count();
+            $hlvl4[$value->id] =  DB::table('schedule')->join('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule_detail.tanda','=','4')->where('schedule.id','=',$value->id)->count();
+            $hlvl5[$value->id] =  DB::table('schedule')->join('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule_detail.tanda','=','5')->where('schedule.id','=',$value->id)->count();
+        }
+        
+        $arrbln=array('01' => "Januari",'02' => "Februari",'03' => "Maret",'04' => "April",'05' => "Mei",'06' => "Juni",'07' => "Juli",'08' => "Agustus",'09' => "Sepetember",'10' => "Oktober",'11' => "November",'12' => "Desember");
         if (Auth::check()) {
-            return view('schedule.table',compact('schedule','hlvl1','hlvl2','hlvl3','hlvl4','hlvl5'))
+            return view('schedule.table',compact('schedule','hlvl1','hlvl2','hlvl3','hlvl4','hlvl5','arrbln'))
             ->with('i', (request()->input('page', 1) - 1) * 10);
         }else{
             return redirect('/');
@@ -83,7 +84,7 @@ class Schedule extends Controller
                 Alert::warning('Warning', 'Data sudah ada !!!');
                 return redirect()->route('schedule.index');
             }else{
-                M_schedule::insertGetId([
+                $idHeader=M_schedule::insertGetId([
                     'bulan_scheduler' => $request->tahun.'-'.$request->bulan,
                     'level_scheduler' => sprintf("%02d",$request->level1).'-'.sprintf("%02d",$request->level2).'-'.sprintf("%02d",$request->level3).'-'.sprintf("%02d",$request->level4).'-'.sprintf("%02d",$request->level5),
                     'divisi_scheduler' => $request->divisi_karyawan,
@@ -91,7 +92,7 @@ class Schedule extends Controller
                     'updated_at' => date('Y-m-d h:i:s')
                 ]);
                 Alert::success('Congrats', 'You\'ve Successfully Saved Data');
-                return redirect()->route('schedule.index');
+                return redirect()->route('schedule.show',$idHeader);
             }
         } 
         ## End Insert Header
@@ -540,10 +541,17 @@ class Schedule extends Controller
         return redirect()->route('schedule.index')
                         ->with('success','Product deleted successfully');
     }
-    public function deletedetail($id)
+    public function deletedetail(Request $request)
     {
-        M_scheduleDetail::where('schedule_id', '=', $id)->delete();
+        M_scheduleDetail::where('schedule_id', '=', $request->idDetail)->delete();
         Alert::success('Congrats', 'Data Berhasil dihapus');
         return Redirect::back();
+    }
+    public function deletedata(Request $request)
+    {
+        M_schedule::where('id', '=', $request->id_task)->delete();
+        Alert::success('Congrats', 'Data Berhasil dihapus');
+        return redirect()->route('schedule.index')
+                        ->with('success','Product deleted successfully');
     }
 }

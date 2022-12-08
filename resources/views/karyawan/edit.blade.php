@@ -1,6 +1,7 @@
 @extends('template.template')
 
 @section('content')
+@include('sweetalert::alert')
 <div class="section-header">
     <h1>Karyawan</h1>
     <div class="section-header-breadcrumb">

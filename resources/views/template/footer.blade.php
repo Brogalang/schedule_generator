@@ -19,6 +19,16 @@
 <!-- <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script> -->
 
+<!-- JS Libraies -->
+<script src="{{asset('assets/modules/datatables/datatables.min.js')}}"></script>
+<script src="{{asset('assets/modules/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js')}}"></script>
+<script src="{{asset('assets/modules/datatables/Select-1.2.4/js/dataTables.select.min.js')}}"></script>
+<script src="{{asset('assets/modules/jquery-ui/jquery-ui.min.js')}}"></script>
+
+<!-- Page Specific JS File -->
+<script src="{{asset('assets/js/page/modules-datatables.js')}}"></script>
+<script src="{{asset('alertifyjs/alertify.min.js')}}"></script>
+
 <script type="text/javascript">
  
  $(document).ready(function(){

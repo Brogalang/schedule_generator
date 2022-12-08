@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use RealRashid\SweetAlert\Facades\Alert;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -24,7 +25,7 @@ class Karyawan extends Controller
                     ->join('divisi', 'divisi.id', '=', 'karyawan.divisi_karyawan')
                     ->orderby('level_karyawan','ASC')
                     ->orderby('nama_karyawan','ASC')
-                    ->paginate(10);
+                    ->get();
 
         $tanggal = new DateTime('1993-01-15');
 
@@ -70,7 +71,8 @@ class Karyawan extends Controller
         // var_dump($request->kode_divisi);
     
         M_karyawan::create($request->all());
-     
+        
+        Alert::success('Congrats', 'You\'ve Successfully Saved Data');
         return redirect()->route('karyawan.index')
                         ->with('success','Product created successfully.');
     }
@@ -102,7 +104,8 @@ class Karyawan extends Controller
         ]);
     
         $karyawan->update($request->all());
-    
+        
+        Alert::success('Congrats', 'You\'ve Successfully Updated Data');
         return redirect()->route('karyawan.index')
                         ->with('success','Product updated successfully');
     }
@@ -110,6 +113,14 @@ class Karyawan extends Controller
     public function destroy($id)
     {
         M_karyawan::where('id', '=', $id)->delete();
+        return redirect()->route('karyawan.index')
+                        ->with('success','Product deleted successfully');
+    }
+
+    public function deletekary(Request $request)
+    {
+        M_karyawan::where('id', '=', $request->idKary)->delete();
+        Alert::success('Congrats', 'Data Berhasil dihapus');
         return redirect()->route('karyawan.index')
                         ->with('success','Product deleted successfully');
     }

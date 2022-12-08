@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use RealRashid\SweetAlert\Facades\Alert;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -10,7 +11,7 @@ class Divisi extends Controller
 {
     public function index()
     {
-        $divisi = M_divisi::paginate(10);
+        $divisi = M_divisi::get();
         if (Auth::check()) {
             return view('divisi.table',compact('divisi'))
             ->with('i', (request()->input('page', 1) - 1) * 10);
@@ -36,6 +37,7 @@ class Divisi extends Controller
     
         M_divisi::create($request->all());
      
+        Alert::success('Congrats', 'You\'ve Successfully Saved Data');
         return redirect()->route('divisi.index')
                         ->with('success','Product created successfully.');
     }
@@ -61,7 +63,8 @@ class Divisi extends Controller
         ]);
     
         $divisi->update($request->all());
-    
+        
+        Alert::success('Congrats', 'You\'ve Successfully Updated Data');
         return redirect()->route('divisi.index')
                         ->with('success','Product updated successfully');
     }
@@ -69,6 +72,14 @@ class Divisi extends Controller
     public function destroy($id)
     {
         M_divisi::where('id', '=', $id)->delete();
+        return redirect()->route('divisi.index')
+                        ->with('success','Product deleted successfully');
+    }
+
+    public function deletediv(Request $request)
+    {
+        M_divisi::where('id', '=', $request->idDiv)->delete();
+        Alert::success('Congrats', 'Data Berhasil dihapus');
         return redirect()->route('divisi.index')
                         ->with('success','Product deleted successfully');
     }

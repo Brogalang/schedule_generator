@@ -7,7 +7,7 @@
     <div class="section-header-breadcrumb">
     <div class="breadcrumb-item active"><a href="{{route('home')}}">Dashboard</a></div>
     <div class="breadcrumb-item"><a href="{{route('schedule.index')}}">Schedule</a></div>
-    <div class="breadcrumb-item">Show</div>
+    <div class="breadcrumb-item">Generate Schedule</div>
     </div>
 </div>
 
@@ -93,11 +93,11 @@
     </div>
     <div class="card-footer text-left">
         @if($ctlvl1>0)
-            <form action="{{ route('deletedetail',$idDetail) }}" method="GET">
-                @csrf
+            {{--<form action="{{ route('deletedetail',$idDetail) }}" method="GET">
+                @csrf--}}
                 <a class="btn btn-secondary" href="{{ route('schedule.index') }}">Back</a>
-                <button type="submit" id="delButton" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete Schedule</button>
-            </form>
+                <button type="submit" id="delButton" class="btn btn-danger" onclick="deletedetail('{{$idDetail}}')">Delete Schedule</button>
+            {{--</form>--}}
         @else
             <form action="{{ route('schedule.store') }}" method="POST" novalidate="">
                 <input type="hidden" name="bulan" id="bulan" value="{{substr($schedule->bulan_scheduler,5,2)}}">
@@ -114,3 +114,27 @@
 </div>
 
 @endsection
+
+@push('javascript')
+<script>
+    function deletedetail(idDetail) {
+        alertify.confirm('Warning', 'Are you sure ???', 
+        function(){ 
+            alertify.success('Ok') 
+            $.ajax({
+                data: 'idDetail='+idDetail,
+                url: "{{ route('deletedetail') }}",
+                type: "GET",
+                datatype : "json",
+                success: function(response) {
+                    window.location.href = ""+idDetail;
+                },
+                error: function(response) {
+                }
+            });
+        }, function(){ 
+            alertify.error('Cancel')
+        })
+    }
+</script>
+@endpush
