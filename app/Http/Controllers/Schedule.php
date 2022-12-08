@@ -329,6 +329,7 @@ class Schedule extends Controller
             }
             $person=array();
             for ($i=1; $i <=5 ; $i++) { 
+            $empty=0;
                 $method=$request->metode.$i;
                 // print_r($method);
                 // die();
@@ -378,18 +379,33 @@ class Schedule extends Controller
                 if ($method=='insertlvl1') {
                     $bagian=$hlvl1/4;
                     $tanda=1;
+                    if ($hlvl1==0) {
+                        $empty=1;
+                    }
                 }elseif ($method=='insertlvl2') {
                     $bagian=$hlvl2/4;
                     $tanda=2;
+                    if ($hlvl2==0) {
+                        $empty=1;
+                    }
                 }elseif ($method=='insertlvl3') {
                     $bagian=$hlvl3/4;
                     $tanda=3;
+                    if ($hlvl3==0) {
+                        $empty=1;
+                    }
                 }elseif ($method=='insertlvl4') {
                     $bagian=$hlvl4/4;
                     $tanda=4;
+                    if ($hlvl4==0) {
+                        $empty=1;
+                    }
                 }elseif ($method=='insertlvl5') {
                     $bagian=$hlvl5/4;
                     $tanda=5;
+                    if ($hlvl5==0) {
+                        $empty=1;
+                    }
                 }
                 ## END Untuk Hitung Jumlah Pershift nya
 
@@ -406,7 +422,9 @@ class Schedule extends Controller
                     $pengali=$hlvl5*2;
                 }
                 ## END Untuk Hitung Jumlah dikali 2
-                generateShift ($person,$bagian,$idsch,$hari,$pengali,$tanda,$periodeGlobal);
+                if ($empty==0) {
+                    generateShift ($person,$bagian,$idsch,$hari,$pengali,$tanda,$periodeGlobal);
+                }
             }
             Alert::success('Congrats', 'Berhasil Generate');
 

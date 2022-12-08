@@ -45,8 +45,8 @@
         </div>
 
         <div class="form-group">
-        <label>Divisi Karyawan</label>
-        <select name="divisi_karyawan" id="divisi_karyawan" class="form-control" required="">
+        <label>Divisi Karyawan</label><span class="text-danger" aria-hidden="true">&starf;</span>
+        <select name="divisi_karyawan" id="divisi_karyawan" class="form-control select2bs4" required="">
             <option value="">Pilih Data</option>
             @foreach($divisi as $div)
                 <option value="{{$div->id}}">{{$div->kode_divisi}} - {{$div->nama_divisi}}</option>
@@ -61,13 +61,46 @@
         </div>
         <!---->
         <div class="form-group">
-        <label>Jabatan Karyawan</label>
-            <select class="selectpicker form-control select2">
-				<option>Mustard</option>
-				<option>Ketchup</option>
-				<option>Relish</option>
-			</select> 
+        <label>Jabatan</label>
+        <select name="jabatan" id="jabatan" class="form-control select2bs4">
+            @foreach($jabatan as $jab)
+                <option value="{{$jab->jabatan}}">{{$jab->jabatan}}</option>
+            @endforeach
+        </select>
         </div>
+        <!---->
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-2">
+                    <label>Tempat Lahir</label>
+                    <input type="text" class="form-control" name="tmptlahir" id="tmptlahir">
+                </div>
+                <div class="col-sm-4">
+                    <label>Tanggal Lahir</label>
+                    <input type="text" class="form-control datepicker" name="tanggallahir" id="tanggallahir">
+                </div>
+            </div>
+        </div>
+        <!---->
+        <div class="form-group">
+        <label>Tanggal masuk</label>
+        <input type="text" class="form-control datepicker" name="tglmasuk" id="tglmasuk">
+        </div>
+        <!---->
+        <div class="form-group">
+        <label>Jenis Kelamin</label>
+        <select name="jk" id="jk" class="form-control">
+            <option value="">Pilih Data</option>
+            <option value="Laki-laki">Laki - laki</option>
+            <option value="Perempuan">Perempuan</option>
+        </select>
+        </div>
+        <!---->
+        <div class="form-group">
+        <label>Alamat</label>
+        <textarea name="alamat" id="alamat" class="form-control"></textarea>
+        </div>
+        
     </div>
     <div class="card-footer text-right">
         <a class="btn btn-secondary" href="{{ route('karyawan.index') }}">Back</a>

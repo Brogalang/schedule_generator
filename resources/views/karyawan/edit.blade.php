@@ -34,7 +34,7 @@
         <label>Level Karyawan</label>
         <select name="level_karyawan" id="level_karyawan" class="form-control" required="">
             @for($i=1;$i<=5;$i++)
-                @if($i==$karyawan->level_karyawab)
+                @if($i==$karyawan->level_karyawan)
                     <option value="{{$i}}" selected>{{$i}}</option>
                 @else
                     <option value="{{$i}}">{{$i}}</option>
@@ -67,6 +67,57 @@
         <div class="valid-feedback">
             Nah gitu dong
         </div>
+        </div>
+
+        <!---->
+        <div class="form-group">
+        <label>Jabatan</label>
+        <select name="jabatan" id="jabatan" class="form-control select2bs4">
+            @foreach($jabatan as $jab)
+                @if($i==$karyawan->jabatan)
+                    <option value="{{$jab->jabatan}}" selected>{{$jab->jabatan}}</option>
+                @else
+                    <option value="{{$jab->jabatan}}" selected>{{$jab->jabatan}}</option>
+                @endif
+            @endforeach
+        </select>
+        </div>
+        <!---->
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-2">
+                    <label>Tempat Lahir</label>
+                    <input type="text" class="form-control" name="tmptlahir" id="tmptlahir" value="{{$karyawan->tmptlahir}}">
+                </div>
+                <div class="col-sm-4">
+                    <label>Tanggal Lahir</label>
+                    <input type="text" class="form-control datepicker" name="tanggallahir" id="tanggallahir" value="{{$karyawan->tanggallahir}}">
+                </div>
+            </div>
+        </div>
+        <!---->
+        <div class="form-group">
+        <label>Tanggal masuk</label>
+        <input type="text" class="form-control datepicker" name="tglmasuk" id="tglmasuk" value="{{$karyawan->tglmasuk}}">
+        </div>
+        <!---->
+        <div class="form-group">
+        <label>Jenis Kelamin</label>
+        <select name="jk" id="jk" class="form-control">
+            <option value="">Pilih Data</option>
+            @foreach($jnskelamin as $jns => $val)
+                @if($karyawan->jk==$jns)
+                    <option value="{{$jns}}" selected>{{$val}}</option>
+                @else
+                    <option value="{{$jns}}">{{$val}}</option>
+                @endif
+            @endforeach
+        </select>
+        </div>
+        <!---->
+        <div class="form-group">
+        <label>Alamat</label>
+        <textarea name="alamat" id="alamat" class="form-control" value="{{$karyawan->alamat}}">{{$karyawan->alamat}}</textarea>
         </div>
     </div>
     <div class="card-footer text-right">

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\M_karyawan;
 use App\Models\M_divisi;
 use DB;
+use DateTime;
 
 class Karyawan extends Controller
 {
@@ -19,11 +20,29 @@ class Karyawan extends Controller
         // $karyawan = M_karyawan::paginate(10);
         // $divisi = M_divisi::all();
         $karyawan = DB::table('karyawan')
-                    ->select('karyawan.id as id','divisi.nama_divisi as nama_divisi','nama_karyawan','level_karyawan','divisi_karyawan')
+                    ->select('karyawan.id as id','divisi.nama_divisi as nama_divisi','nama_karyawan','level_karyawan','divisi_karyawan','jabatan','alamat','jk','tanggallahir','tmptlahir','tglmasuk')
                     ->join('divisi', 'divisi.id', '=', 'karyawan.divisi_karyawan')
+                    ->orderby('level_karyawan','ASC')
+                    ->orderby('nama_karyawan','ASC')
                     ->paginate(10);
+
+        $tanggal = new DateTime('1993-01-15');
+
+        $today = new DateTime('today');
+                    
+        foreach ($karyawan as $key => $value) {
+            $tglmasuk[$value->id] = new DateTime($value->tglmasuk);
+            $thnlamanya[$value->id] = $today->diff($tglmasuk[$value->id])->y;
+            if ($thnlamanya[$value->id]<1) {
+                $thnlamanya[$value->id]="< 1";
+            }else{
+                $thnlamanya[$value->id]=$thnlamanya[$value->id].' Tahun';
+            }
+
+        }
+      
         if (Auth::check()) {
-            return view('karyawan.table',compact('karyawan'))
+            return view('karyawan.table',compact('karyawan','thnlamanya'))
             ->with('i', (request()->input('page', 1) - 1) * 10);
         }else{
             return redirect('/');
@@ -33,8 +52,11 @@ class Karyawan extends Controller
    
     public function create()
     {
+        $jabatan = M_karyawan::select('jabatan')
+                            ->distinct()
+                            ->get();
         $divisi = M_divisi::all();
-        return view('karyawan.add',compact('divisi'));
+        return view('karyawan.add',compact('divisi','jabatan'));
     }
 
    
@@ -63,8 +85,12 @@ class Karyawan extends Controller
    
     public function edit(M_karyawan $karyawan)
     {
+        $jabatan = M_karyawan::select('jabatan')
+                            ->distinct()
+                            ->get();
         $divisi = M_divisi::all();
-        return view('karyawan.edit',compact('karyawan','divisi'));
+        $jnskelamin=array("Laki-laki" => "Laki - laki","Perempuan" => "Perempuan");
+        return view('karyawan.edit',compact('karyawan','divisi','jabatan','jnskelamin'));
     }
 
     public function update(Request $request, M_karyawan $karyawan)

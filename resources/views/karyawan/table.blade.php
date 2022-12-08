@@ -19,17 +19,35 @@
         <tr>
             <th>No</th>
             <th>Nama Kayawan</th>
-            <th>Level Karyawan</th>
-            <th>Divisi Karyawan</th>
+            <th>Level</th>
+            <th>Divisi</th>
+            <th>Jabatan</th>
+            <th>Jenis Kelamin</th>
+            <th>Tanggal Lahir</th>
+            <th>Tanggal Masuk</th>
+            <th>Alamat</th>
             <th>Action</th>
         </tr>
         @foreach($karyawan as $kar)
         <tr>
             <td>{{ ++$i }}</td>
-            <td>{{$kar->nama_karyawan}}</td>
+            <td><b>{{$kar->nama_karyawan}}</b> <br> Lama Bekerja {{$thnlamanya[$kar->id]}}</td>
             <td>{{$kar->level_karyawan}}</td>
             <td>{{$kar->nama_divisi}}</td>
-            <td>
+            <td>{{$kar->jabatan}}</td>
+            <td>{{$kar->jk}}</td>
+            @if(date('d-m-Y',strtotime($kar->tanggallahir))=='01-01-1970')
+                <td></td>
+            @else
+                <td>{{date('d-m-Y',strtotime($kar->tanggallahir))}}</td>
+            @endif
+            @if(date('d-m-Y',strtotime($kar->tglmasuk))=='01-01-1970')
+                <td></td>
+            @else
+                <td>{{date('d-m-Y',strtotime($kar->tglmasuk))}}</td>
+            @endif
+            <td>{{$kar->alamat}}</td>
+            <td nowrap>
                 <form action="{{ route('karyawan.destroy',$kar->id) }}" method="POST">
                     <a class="btn btn-info" href="{{ route('karyawan.edit',$kar->id) }}" ><i class="fa fa-edit" title="Edit Data"></i></a>
                     @csrf

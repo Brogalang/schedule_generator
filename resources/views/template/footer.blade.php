@@ -8,7 +8,7 @@
 <script src="{{asset('assets/js/stisla.js')}}"></script>
 
 <!-- JS Libraies -->
-
+<script src="{{asset('assets/modules/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
 <!-- Page Specific JS File -->
 
 <!-- Template JS File -->
@@ -31,13 +31,13 @@
     $(function () {
         //Initialize Select2 Elements
         $('.select2').select2({
-            theme: 'bootstrap4',
-            tags: true
+            theme: 'bootstrap4'
         })
 
         //Initialize Select2 Elements
         $('.select2bs4').select2({
-            theme: 'bootstrap4'
+            theme: 'bootstrap4',
+            tags: true
         })
     })
 </script>
