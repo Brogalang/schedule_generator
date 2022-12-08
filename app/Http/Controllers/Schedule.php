@@ -327,13 +327,15 @@ class Schedule extends Controller
                 // print_r($data3);
                 
             }
+            $person=array();
             for ($i=1; $i <=5 ; $i++) { 
                 $method=$request->metode.$i;
                 // print_r($method);
                 // die();
+                unset($person);
                 if ($method=='insertlvl1') {
                     if ($hlvl1%4!=0) {
-                        Alert::error('Gagal', 'Jumlah Karyawan bukan kelipatan 4 !!!');
+                        Alert::error('Gagal', 'Jumlah Karyawan bukan kelipatan 4 Level 1!!!');
                         return Redirect::back();
                     }
                     foreach ($lvl1 as $nmkar) {
@@ -341,7 +343,7 @@ class Schedule extends Controller
                     }
                 }elseif ($method=='insertlvl2') {
                     if ($hlvl2%4!=0) {
-                        Alert::error('Gagal', 'Jumlah Karyawan bukan kelipatan 4 !!!');
+                        Alert::error('Gagal', 'Jumlah Karyawan bukan kelipatan 4 Level 2!!!');
                         return Redirect::back();
                     }
                     foreach ($lvl2 as $nmkar) {
@@ -349,7 +351,7 @@ class Schedule extends Controller
                     }
                 }elseif ($method=='insertlvl3') {
                     if ($hlvl3%4!=0) {
-                        Alert::error('Gagal', 'Jumlah Karyawan bukan kelipatan 4 !!!');
+                        Alert::error('Gagal', 'Jumlah Karyawan bukan kelipatan 4 Level 3!!!');
                         return Redirect::back();
                     }
                     foreach ($lvl3 as $nmkar) {
@@ -357,7 +359,7 @@ class Schedule extends Controller
                     }
                 }elseif ($method=='insertlvl4') {
                     if ($hlvl4%4!=0) {
-                        Alert::error('Gagal', 'Jumlah Karyawan bukan kelipatan 4 !!!');
+                        Alert::error('Gagal', 'Jumlah Karyawan bukan kelipatan 4 Level 4!!!');
                         return Redirect::back();
                     }
                     foreach ($lvl4 as $nmkar) {
@@ -365,7 +367,7 @@ class Schedule extends Controller
                     }
                 }elseif ($method=='insertlvl5') {
                     if ($hlvl5%4!=0) {
-                        Alert::error('Gagal', 'Jumlah Karyawan bukan kelipatan 4 !!!');
+                        Alert::error('Gagal', 'Jumlah Karyawan bukan kelipatan 4 Level 5!!!');
                         return Redirect::back();
                     }
                     foreach ($lvl5 as $nmkar) {

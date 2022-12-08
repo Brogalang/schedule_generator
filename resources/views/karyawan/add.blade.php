@@ -19,7 +19,7 @@
     </div>
     <div class="card-body">
         <div class="form-group">
-        <label>Nama Karyawan</label>
+        <label>Nama Karyawan</label><span class="text-danger" aria-hidden="true">&starf;</span>
         <input type="text" class="form-control" name="nama_karyawan" required="">
         <div class="invalid-feedback">
             Kok masih kosong?
@@ -30,7 +30,7 @@
         </div>
 
         <div class="form-group">
-        <label>Level Karyawan</label>
+        <label>Level Karyawan</label><span class="text-danger" aria-hidden="true">&starf;</span>
         <select name="level_karyawan" id="level_karyawan" class="form-control" required="">
             @for($i=1;$i<=5;$i++)
                 <option value="{{$i}}">{{$i}}</option>
@@ -59,6 +59,15 @@
             Nah gitu dong
         </div>
         </div>
+        <!---->
+        <div class="form-group">
+        <label>Jabatan Karyawan</label>
+            <select class="selectpicker form-control select2">
+				<option>Mustard</option>
+				<option>Ketchup</option>
+				<option>Relish</option>
+			</select> 
+        </div>
     </div>
     <div class="card-footer text-right">
         <a class="btn btn-secondary" href="{{ route('karyawan.index') }}">Back</a>
@@ -69,3 +78,6 @@
 </div>
 
 @endsection
+
+@push('javascript')
+@endpush

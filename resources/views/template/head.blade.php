@@ -11,6 +11,10 @@
 <!-- Template CSS -->
 <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/components.css')}}">
+
+ <!-- Select2 -->
+ <link rel="stylesheet" href="{{asset('assets/modules/select2/dist/css/select2.min.css')}}">
+ <link rel="stylesheet" href="{{asset('assets/modules/select2/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.3.0/css/flag-icon.min.css"> -->
 <!-- Start GA -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
