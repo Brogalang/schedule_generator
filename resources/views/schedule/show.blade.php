@@ -47,87 +47,68 @@
                 <label>Level 1</label>
                 <h5>{{$hlvl1}} Orang</h5>
                 @if($ctlvl1>0)
-                    <a class="btn btn-danger">Data Sudah ada</a>
+                    <button class="btn btn-danger">Data Sudah ada</button>
                 @else
-                <form class="needs-validation" action="{{ route('schedule.store') }}" method="POST" novalidate="">
-                    <input type="hidden" name="bulan" id="bulan" value="{{substr($schedule->bulan_scheduler,5,2)}}">
-                    <input type="hidden" name="tahun" id="tahun" value="{{substr($schedule->bulan_scheduler,0,4)}}">
-                    <input type="hidden" name="divisi_karyawan" id="divisi_karyawan" value="{{$schedule->divisi_scheduler}}">
-                    @csrf
-                    <input type="hidden" name="metode" id="metode" value="insertlvl1">
-                    <button class="btn btn-primary">Generate Level 1</button>
-                </form>
+                    <button class="btn btn-info">Data Kosong</button>
                 @endif
             </div>
             <div class="form-group col-2">
                 <label>Level 2</label>
                 <h5>{{$hlvl2}} Orang</h5>
                 @if($ctlvl2>0)
-                    <a class="btn btn-danger">Data Sudah ada</a>
+                    <button class="btn btn-danger">Data Sudah ada</button>
                 @else
-                <form class="needs-validation" action="{{ route('schedule.store') }}" method="POST" novalidate="">
-                    <input type="hidden" name="bulan" id="bulan" value="{{substr($schedule->bulan_scheduler,5,2)}}">
-                    <input type="hidden" name="tahun" id="tahun" value="{{substr($schedule->bulan_scheduler,0,4)}}">
-                    <input type="hidden" name="divisi_karyawan" id="divisi_karyawan" value="{{$schedule->divisi_scheduler}}">
-                    @csrf
-                    <input type="hidden" name="metode" id="metode" value="insertlvl2">
-                    <button class="btn btn-primary">Generate Level 2</button>
-                </form>
+                    <button class="btn btn-info">Data Kosong</button>
                 @endif
             </div>
             <div class="form-group col-2">
                 <label>Level 3</label>
                 <h5>{{$hlvl3}} Orang</h5>
                 @if($ctlvl3>0)
-                    <a class="btn btn-danger">Data Sudah ada</a>
+                    <button class="btn btn-danger">Data Sudah ada</button>
                 @else
-                <form class="needs-validation" action="{{ route('schedule.store') }}" method="POST" novalidate="">
-                    <input type="hidden" name="bulan" id="bulan" value="{{substr($schedule->bulan_scheduler,5,2)}}">
-                    <input type="hidden" name="tahun" id="tahun" value="{{substr($schedule->bulan_scheduler,0,4)}}">
-                    <input type="hidden" name="divisi_karyawan" id="divisi_karyawan" value="{{$schedule->divisi_scheduler}}">
-                    @csrf
-                    <input type="hidden" name="metode" id="metode" value="insertlvl3">
-                    <button class="btn btn-primary">Generate Level 3</button>
-                </form>
+                    <button class="btn btn-info">Data Kosong</button>
                 @endif
             </div>
             <div class="form-group col-2">
                 <label>Level 4</label>
                 <h5>{{$hlvl4}} Orang</h5>
                 @if($ctlvl4>0)
-                    <a class="btn btn-danger">Data Sudah ada</a>
+                    <button class="btn btn-danger">Data Sudah ada</button>
                 @else
-                <form class="needs-validation" action="{{ route('schedule.store') }}" method="POST" novalidate="">
-                    <input type="hidden" name="bulan" id="bulan" value="{{substr($schedule->bulan_scheduler,5,2)}}">
-                    <input type="hidden" name="tahun" id="tahun" value="{{substr($schedule->bulan_scheduler,0,4)}}">
-                    <input type="hidden" name="divisi_karyawan" id="divisi_karyawan" value="{{$schedule->divisi_scheduler}}">
-                    @csrf
-                    <input type="hidden" name="metode" id="metode" value="insertlvl4">
-                    <button class="btn btn-primary">Generate Level 4</button>
-                </form>
+                    <button class="btn btn-info">Data Kosong</button>
                 @endif
             </div>
             <div class="form-group col-2">
                 <label>Level 5</label>
                 <h5>{{$hlvl5}} Orang</h5>
                 @if($ctlvl5>0)
-                    <a class="btn btn-danger">Data Sudah ada</a>
+                    <button class="btn btn-danger">Data Sudah ada</button>
                 @else
-                <form class="needs-validation" action="{{ route('schedule.store') }}" method="POST" novalidate="">
-                    <input type="hidden" name="bulan" id="bulan" value="{{substr($schedule->bulan_scheduler,5,2)}}">
-                    <input type="hidden" name="tahun" id="tahun" value="{{substr($schedule->bulan_scheduler,0,4)}}">
-                    <input type="hidden" name="divisi_karyawan" id="divisi_karyawan" value="{{$schedule->divisi_scheduler}}">
-                    @csrf
-                    <input type="hidden" name="metode" id="metode" value="insertlvl5">
-                    <button class="btn btn-primary">Generate Level 5</button>
-                </form>
+                    <button class="btn btn-info">Data Kosong</button>
                 @endif
             </div>
             
         </div>
     </div>
     <div class="card-footer text-left">
-        <a class="btn btn-secondary" href="{{ route('schedule.index') }}">Back</a>
+        @if($ctlvl1>0)
+            <form action="{{ route('deletedetail',$idDetail) }}" method="GET">
+                @csrf
+                <a class="btn btn-secondary" href="{{ route('schedule.index') }}">Back</a>
+                <button type="submit" id="delButton" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete Schedule</button>
+            </form>
+        @else
+            <form action="{{ route('schedule.store') }}" method="POST" novalidate="">
+                <input type="hidden" name="bulan" id="bulan" value="{{substr($schedule->bulan_scheduler,5,2)}}">
+                <input type="hidden" name="tahun" id="tahun" value="{{substr($schedule->bulan_scheduler,0,4)}}">
+                <input type="hidden" name="divisi_karyawan" id="divisi_karyawan" value="{{$schedule->divisi_scheduler}}">
+                @csrf
+                <input type="hidden" name="metode" id="metode" value="insertlvl">
+                <a class="btn btn-secondary" href="{{ route('schedule.index') }}">Back</a>
+                <button class="btn btn-primary">Generate</button>
+            </form>
+        @endif
     </div>
 </div>
 </div>

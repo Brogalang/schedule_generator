@@ -16,4 +16,17 @@
 <script src="{{asset('assets/js/custom.js')}}"></script>
 <!-- <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script> -->
+
+<script type="text/javascript">
+ 
+ $(document).ready(function(){
+    // $('#delButton').on('click', function () {
+    //     $(".preloader").fadeOut();
+    // }
+ 
+  $(".preloader").fadeOut();
+ 
+ })
+ 
+</script>
 @stack('javascript');

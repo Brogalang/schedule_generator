@@ -194,47 +194,7 @@ class Schedule extends Controller
             // foreach ($lvl1 as $nmkar) {
             //     $person[]=$nmkar->nama_karyawan;
             // }
-            if ($request->metode=='insertlvl1') {
-                if ($hlvl1%4!=0) {
-                    Alert::error('Gagal', 'Jumlah Karyawan bukan kelipatan 4 !!!');
-                    return Redirect::back();
-                }
-                foreach ($lvl1 as $nmkar) {
-                    $person[]=$nmkar->id;
-                }
-            }elseif ($request->metode=='insertlvl2') {
-                if ($hlvl2%4!=0) {
-                    Alert::error('Gagal', 'Jumlah Karyawan bukan kelipatan 4 !!!');
-                    return Redirect::back();
-                }
-                foreach ($lvl2 as $nmkar) {
-                    $person[]=$nmkar->id;
-                }
-            }elseif ($request->metode=='insertlvl3') {
-                if ($hlvl3%4!=0) {
-                    Alert::error('Gagal', 'Jumlah Karyawan bukan kelipatan 4 !!!');
-                    return Redirect::back();
-                }
-                foreach ($lvl3 as $nmkar) {
-                    $person[]=$nmkar->id;
-                }
-            }elseif ($request->metode=='insertlvl4') {
-                if ($hlvl4%4!=0) {
-                    Alert::error('Gagal', 'Jumlah Karyawan bukan kelipatan 4 !!!');
-                    return Redirect::back();
-                }
-                foreach ($lvl4 as $nmkar) {
-                    $person[]=$nmkar->id;
-                }
-            }elseif ($request->metode=='insertlvl5') {
-                if ($hlvl5%4!=0) {
-                    Alert::error('Gagal', 'Jumlah Karyawan bukan kelipatan 4 !!!');
-                    return Redirect::back();
-                }
-                foreach ($lvl5 as $nmkar) {
-                    $person[]=$nmkar->id;
-                }
-            }
+            
            
             $data = array();
             function generateShift ($person, $level,$idsch,$day,$pengali,$tanda,$periodeGlobal) {
@@ -367,40 +327,87 @@ class Schedule extends Controller
                 // print_r($data3);
                 
             }
-            ## Start Untuk Hitung Jumlah Pershift nya
-            if ($request->metode=='insertlvl1') {
-                $bagian=$hlvl1/4;
-                $tanda=1;
-            }elseif ($request->metode=='insertlvl2') {
-                $bagian=$hlvl2/4;
-                $tanda=2;
-            }elseif ($request->metode=='insertlvl3') {
-                $bagian=$hlvl3/4;
-                $tanda=3;
-            }elseif ($request->metode=='insertlvl4') {
-                $bagian=$hlvl4/4;
-                $tanda=4;
-            }elseif ($request->metode=='insertlvl5') {
-                $bagian=$hlvl5/4;
-                $tanda=5;
-            }
-            ## END Untuk Hitung Jumlah Pershift nya
+            for ($i=1; $i <=5 ; $i++) { 
+                $method=$request->metode.$i;
+                // print_r($method);
+                // die();
+                if ($method=='insertlvl1') {
+                    if ($hlvl1%4!=0) {
+                        Alert::error('Gagal', 'Jumlah Karyawan bukan kelipatan 4 !!!');
+                        return Redirect::back();
+                    }
+                    foreach ($lvl1 as $nmkar) {
+                        $person[]=$nmkar->id;
+                    }
+                }elseif ($method=='insertlvl2') {
+                    if ($hlvl2%4!=0) {
+                        Alert::error('Gagal', 'Jumlah Karyawan bukan kelipatan 4 !!!');
+                        return Redirect::back();
+                    }
+                    foreach ($lvl2 as $nmkar) {
+                        $person[]=$nmkar->id;
+                    }
+                }elseif ($method=='insertlvl3') {
+                    if ($hlvl3%4!=0) {
+                        Alert::error('Gagal', 'Jumlah Karyawan bukan kelipatan 4 !!!');
+                        return Redirect::back();
+                    }
+                    foreach ($lvl3 as $nmkar) {
+                        $person[]=$nmkar->id;
+                    }
+                }elseif ($method=='insertlvl4') {
+                    if ($hlvl4%4!=0) {
+                        Alert::error('Gagal', 'Jumlah Karyawan bukan kelipatan 4 !!!');
+                        return Redirect::back();
+                    }
+                    foreach ($lvl4 as $nmkar) {
+                        $person[]=$nmkar->id;
+                    }
+                }elseif ($method=='insertlvl5') {
+                    if ($hlvl5%4!=0) {
+                        Alert::error('Gagal', 'Jumlah Karyawan bukan kelipatan 4 !!!');
+                        return Redirect::back();
+                    }
+                    foreach ($lvl5 as $nmkar) {
+                        $person[]=$nmkar->id;
+                    }
+                }
+                ## Start Untuk Hitung Jumlah Pershift nya
+                if ($method=='insertlvl1') {
+                    $bagian=$hlvl1/4;
+                    $tanda=1;
+                }elseif ($method=='insertlvl2') {
+                    $bagian=$hlvl2/4;
+                    $tanda=2;
+                }elseif ($method=='insertlvl3') {
+                    $bagian=$hlvl3/4;
+                    $tanda=3;
+                }elseif ($method=='insertlvl4') {
+                    $bagian=$hlvl4/4;
+                    $tanda=4;
+                }elseif ($method=='insertlvl5') {
+                    $bagian=$hlvl5/4;
+                    $tanda=5;
+                }
+                ## END Untuk Hitung Jumlah Pershift nya
 
-            ## Start Untuk Hitung Jumlah dikali 2
-            if ($request->metode=='insertlvl1') {
-                $pengali=$hlvl1*2;
-            }elseif ($request->metode=='insertlvl2') {
-                $pengali=$hlvl2*2;
-            }elseif ($request->metode=='insertlvl3') {
-                $pengali=$hlvl3*2;
-            }elseif ($request->metode=='insertlvl4') {
-                $pengali=$hlvl4*2;
-            }elseif ($request->metode=='insertlvl5') {
-                $pengali=$hlvl5*2;
+                ## Start Untuk Hitung Jumlah dikali 2
+                if ($method=='insertlvl1') {
+                    $pengali=$hlvl1*2;
+                }elseif ($method=='insertlvl2') {
+                    $pengali=$hlvl2*2;
+                }elseif ($method=='insertlvl3') {
+                    $pengali=$hlvl3*2;
+                }elseif ($method=='insertlvl4') {
+                    $pengali=$hlvl4*2;
+                }elseif ($method=='insertlvl5') {
+                    $pengali=$hlvl5*2;
+                }
+                ## END Untuk Hitung Jumlah dikali 2
+                generateShift ($person,$bagian,$idsch,$hari,$pengali,$tanda,$periodeGlobal);
             }
-            ## END Untuk Hitung Jumlah dikali 2
-            generateShift ($person,$bagian,$idsch,$hari,$pengali,$tanda,$periodeGlobal);
             Alert::success('Congrats', 'Berhasil Generate');
+
             return Redirect::back();
         } 
         ### END IF
@@ -423,13 +430,15 @@ class Schedule extends Controller
         $ctlvl3 =  DB::table('schedule')->join('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule.id','=',$schedule->id)->where('schedule_detail.tanda','=','3')->count();
         $ctlvl4 =  DB::table('schedule')->join('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule.id','=',$schedule->id)->where('schedule_detail.tanda','=','4')->count();
         $ctlvl5 =  DB::table('schedule')->join('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule.id','=',$schedule->id)->where('schedule_detail.tanda','=','5')->count();
+
+        $idDetail=$schedule->id;
         // echo"<pre>";
         // print_r($ctlvl1);
         // die();
 
         $arrbln=array('01' => "Januari",'02' => "Februari",'03' => "Maret",'04' => "April",'05' => "Mei",'06' => "Juni",'07' => "Juli",'08' => "Agustus",'09' => "Sepetember",'10' => "Oktober",'11' => "November",'12' => "Desember");
         
-        return view('schedule.show',compact('schedule','divisi','arrbln','hlvl1','hlvl2','hlvl3','hlvl4','hlvl5','ctlvl1','ctlvl2','ctlvl3','ctlvl4','ctlvl5'));
+        return view('schedule.show',compact('schedule','divisi','arrbln','hlvl1','hlvl2','hlvl3','hlvl4','hlvl5','ctlvl1','ctlvl2','ctlvl3','ctlvl4','ctlvl5','idDetail'));
     }
 
     public function showcalendar($id)
@@ -510,5 +519,11 @@ class Schedule extends Controller
         Alert::success('Congrats', 'Data Berhasil dihapus');
         return redirect()->route('schedule.index')
                         ->with('success','Product deleted successfully');
+    }
+    public function deletedetail($id)
+    {
+        M_scheduleDetail::where('schedule_id', '=', $id)->delete();
+        Alert::success('Congrats', 'Data Berhasil dihapus');
+        return Redirect::back();
     }
 }

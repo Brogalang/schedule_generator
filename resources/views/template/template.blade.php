@@ -7,6 +7,12 @@
 <body>
   <div id="app">
     <div class="main-wrapper main-wrapper-1">
+      <div class="preloader">
+        <div class="loading">
+          <img src="{{ asset('assets/img/Fidget-spinner.gif') }}" width="80">
+          <p>Harap Tunggu</p>
+        </div>
+      </div>
       <div class="navbar-bg"></div>
       <nav class="navbar navbar-expand-lg main-navbar">
         <form class="form-inline mr-auto">
