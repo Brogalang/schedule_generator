@@ -9,6 +9,8 @@ use App\Models\M_karyawan;
 use App\Models\M_divisi;
 use App\Models\M_schedule;
 use App\Models\M_scheduleDetail;
+use Excel;
+use App\Exports\ScheduleExport;
 use DB;
 use Redirect;
 
@@ -509,7 +511,81 @@ class Schedule extends Controller
         // echo"<pre>";
         // print_r($data);
         // die();
-        return view('schedule.showjadwal',compact('data','arrshift','hari','first','arrbln'));
+        return view('schedule.showjadwal',compact('data','arrshift','hari','first','arrbln','id'));
+    }
+    public function calendarview($id)
+    {
+        $schedule = M_scheduleDetail::where('schedule_id','=',$id)
+                            ->get();
+        $first2 = M_scheduleDetail::where('schedule_id','=',$id)
+                            ->orderby('tanggal','DESC')
+                            ->first();
+        $query= DB::select("
+                    select karyawan.nama_karyawan as nama,
+                    (case when tanggal = 1 then shift else 'asu' end ) as '1' ,
+                    (case when tanggal = 2 then shift else 'asu' end ) as '2' ,
+                    (case when tanggal = 3 then shift else 'asu' end ) as '3' ,
+                    (case when tanggal = 4 then shift else 'asu' end ) as '4' ,
+                    (case when tanggal = 5 then shift else 'asu' end ) as '5' ,
+                    (case when tanggal = 6 then shift else 'asu' end ) as '6' ,
+                    (case when tanggal = 7 then shift else 'asu' end ) as '7' ,
+                    (case when tanggal = 8 then shift else 'asu' end ) as '8' ,
+                    (case when tanggal = 9 then shift else 'asu' end ) as '9' ,
+                    (case when tanggal = 10 then shift else 'asu' end ) as '10',
+                    (case when tanggal = 11 then shift else 'asu' end ) as '11', 
+                    (case when tanggal = 12 then shift else 'asu' end ) as '12', 
+                    (case when tanggal = 13 then shift else 'asu' end ) as '13', 
+                    (case when tanggal = 14 then shift else 'asu' end ) as '14', 
+                    (case when tanggal = 15 then shift else 'asu' end ) as '15', 
+                    (case when tanggal = 16 then shift else 'asu' end ) as '16', 
+                    (case when tanggal = 17 then shift else 'asu' end ) as '17', 
+                    (case when tanggal = 18 then shift else 'asu' end ) as '18', 
+                    (case when tanggal = 19 then shift else 'asu' end ) as '19', 
+                    (case when tanggal = 20 then shift else 'asu' end ) as '20', 
+                    (case when tanggal = 21 then shift else 'asu' end ) as '21', 
+                    (case when tanggal = 22 then shift else 'asu' end ) as '22', 
+                    (case when tanggal = 23 then shift else 'asu' end ) as '23', 
+                    (case when tanggal = 24 then shift else 'asu' end ) as '24', 
+                    (case when tanggal = 25 then shift else 'asu' end ) as '25', 
+                    (case when tanggal = 26 then shift else 'asu' end ) as '26', 
+                    (case when tanggal = 27 then shift else 'asu' end ) as '27', 
+                    (case when tanggal = 28 then shift else 'asu' end ) as '28', 
+                    (case when tanggal = 29 then shift else 'asu' end ) as '29', 
+                    (case when tanggal = 30 then shift else 'asu' end ) as '30', 
+                    (case when tanggal = 31 then shift else 'asu' end ) as '31'
+                    from schedule_detail
+                    left join karyawan on schedule_detail.karyawanid=karyawan.id
+                    where schedule_detail.schedule_id = '".$id."'
+                    ");
+        // $kary = M_karyawan::orderby('level_karyawan','ASC')
+        //                 ->get();
+        $arrbln2=array('01' => "Januari",'02' => "Februari",'03' => "Maret",'04' => "April",'05' => "Mei",'06' => "Juni",'07' => "Juli",'08' => "Agustus",'09' => "Sepetember",'10' => "Oktober",'11' => "November",'12' => "Desember");
+        if ($first2) {
+
+        }else{
+            Alert::error('Gagal', 'Schedule belum ada !!!');
+            return Redirect::back();
+        }
+        $data2=array();
+        $arrakary=array();
+        // foreach ($kary as $key => $val) {
+        //     $arrakary[$val->level_karyawan][$val->id]=$val->nama_karyawan;
+        // }
+        $hari2=$first2->tanggal;
+        foreach ($query as $key => $val) {
+            for ($i=1; $i <= $hari2 ; $i++) { 
+                if ($val->$i!='asu') {
+                    $data2[$val->nama][$i][$val->$i]=$val->$i;
+                }
+            }
+        }
+       
+        // }
+        // echo"<pre>";
+        // print_r($data2);
+        // die();
+        $j=1;
+        return view('schedule.calendar',compact('data2','first2','hari2','arrbln2','id','query','j'));
     }
 
    
@@ -553,5 +629,11 @@ class Schedule extends Controller
         Alert::success('Congrats', 'Data Berhasil dihapus');
         return redirect()->route('schedule.index')
                         ->with('success','Product deleted successfully');
+    }
+
+    public function exportExcel()
+    {
+        $nama_file = 'laporan_sembako_'.date('Y-m-d_H-i-s').'.xlsx';
+        return Excel::download(new ScheduleExport, $nama_file);
     }
 }
