@@ -69,7 +69,7 @@
             <td style="text-align:center">
                 {{--<form action="{{ route('schedule.destroy',$sch->id) }}" method="POST">--}}
                     <a class="btn btn-outline-success" href="{{ route('schedule.show',$sch->id) }}" ><i class="fa fa-eye" title="Show Data"></i></a>
-                    <a class="btn btn-outline-dark" href="{{ route('showcalendar',$sch->id) }}" ><i class="fa fa-calendar" title="Show Generate"></i></a>
+                    <a class="btn btn-outline-dark" href="{{ route('calendarview',$sch->id) }}" ><i class="fa fa-calendar" title="Show Generate"></i></a>
                     <a class="btn btn-info" href="{{ route('schedule.edit',$sch->id) }}" ><i class="fa fa-edit" title="Edit Data"></i></a>
                     {{--@csrf
                     @method('DELETE')--}}

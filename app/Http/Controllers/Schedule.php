@@ -588,6 +588,14 @@ class Schedule extends Controller
         return view('schedule.calendar',compact('data2','first2','hari2','arrbln2','id','query','j'));
     }
 
+    public function editcalendar($id)
+    {
+        $schedule = M_schedule::find($id);
+        $divisi = M_divisi::all();
+        $arrbln=array('01' => "Januari",'02' => "Februari",'03' => "Maret",'04' => "April",'05' => "Mei",'06' => "Juni",'07' => "Juli",'08' => "Agustus",'09' => "Sepetember",'10' => "Oktober",'11' => "November",'12' => "Desember");
+        return view('schedule.edit',compact('schedule','arrbln','divisi'));
+    }
+
    
     public function edit(M_schedule $schedule)
     {

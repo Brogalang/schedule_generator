@@ -13,8 +13,9 @@
 
 <div class="section-body">
     <a class="btn btn-secondary" href="{{ route('schedule.index') }}">Back</a>
-    <a class="btn btn-secondary" href="{{ route('showcalendar',$id) }}">Shift View</a>
-    <button class="btn btn-secondary" id="excelButton">Excel</button>
+    {{--<a class="btn btn-secondary" href="{{ route('showcalendar',$id) }}">Shift View</a>--}}
+    <button class="btn btn-success" id="excelButton">Excel</button>
+    <a class="btn btn-info" href="{{ route('editcalendar',$id) }}">Edit</a>
     <!-- <div class="card-header">
         <h5>Periode {{$arrbln2[substr($first2->periode,5,2)]}} {{substr($first2->periode,0,4)}}</h5>
     </div> -->
