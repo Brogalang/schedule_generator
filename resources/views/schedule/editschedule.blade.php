@@ -3,102 +3,183 @@
 @section('content')
 @include('sweetalert::alert')
 <div class="section-header">
-    <h1>Schedule</h1>
+    <h1>Schedule Detail</h1>
     <div class="section-header-breadcrumb">
     <div class="breadcrumb-item active"><a href="{{route('home')}}">Dashboard</a></div>
     <div class="breadcrumb-item"><a href="{{route('schedule.index')}}">Schedule</a></div>
-    <div class="breadcrumb-item">Edit</div>
+    <div class="breadcrumb-item">Edit Detail</div>
     </div>
 </div>
 
 <div class="section-body">
 <div class="card">
-    <form class="needs-validation" action="{{ route('schedule.update',$schedule->id) }}" method="POST" novalidate="">
+    <form class="needs-validation" action="{{ route('updateshift') }}" method="GET" novalidate="">
     @csrf
     @method('PUT')
     <div class="card-header">
-        <h4>Add Schedule</h4><br>
-
-        <a class="btn btn-secondary" href="{{ route('schedule.index') }}">Back</a>
-        <button class="btn btn-primary">Save Schedule</button>
+        <h4>Edit Schedule Detail</h4><br>
     </div>
     <!-- <div class="card-footer">
     </div> -->
     <div class="card-body">
         <div class="row">
-            <div class="form-group col-2">
-                <label>Bulan</label>
-                <select name="bulan" id="bulan" class="form-control">
-                    @foreach($arrbln as $key => $val)
-                        @if($key==substr($schedule->bulan_scheduler,5,2))
-                            <option value="{{$key}}" selected>{{$val}}</option>
-                        @else
-                            <option value="{{$key}}">{{$val}}</option>
-                        @endif
+            <div class="form-group col-3">
+                <label>Nama Karyawan</label>
+                <select name="nmkar" id="nmkar" class="form-control select2" onchange="getshift('{{$id}}')" required="">
+                    <option value="">Pilih Data</option>
+                    @foreach($optkar as $key => $val)
+                        <option value="{{$val->karyawanid}}">{{$val->nama_karyawan}}</option>
                     @endforeach
                 </select>
+
+                <div class="invalid-feedback">
+                    Belum diisi !!
+                </div>
+                <div class="valid-feedback">
+                    Oke
+                </div>
             </div>
-            <div class="form-group col-2">
-                <label>Tahun</label>
-                <select name="tahun" id="tahun" class="form-control">
-                   @for($i=date('Y');$i>=2015;$i--)
-                        @if($i==substr($schedule->bulan_scheduler,0,4))
-                            <option value="{{$i}}" selected>{{$i}}</option>
-                        @else
-                            <option value="{{$i}}">{{$i}}</option>
-                        @endif
-                   @endfor
+            <div class="form-group col-1">
+                <label>Tanggal</label>
+                <select name="tglsch" id="tglsch" class="form-control select2" onchange="getshift('{{$id}}')" required="">
+                    <option value="">Pilih</option>
+                    @for($i=1;$i<=$hari;$i++)
+                        <option value="{{$i}}">{{$i}}</option>
+                    @endfor
                 </select>
+
+                <div class="invalid-feedback">
+                    Belum diisi !!
+                </div>
+                <div class="valid-feedback">
+                    Oke
+                </div>
+            </div>
+            <div class="form-group col-2">
+                <label>Shift</label>
+                <select name="shiftsch" id="shiftsch" class="form-control select2" required="">
+                    <option value="">Pilih Data</option>
+                </select>
+                <div class="invalid-feedback">
+                    Belum diisi !!
+                </div>
+                <div class="valid-feedback">
+                    Oke
+                </div>
             </div>
         </div>
-
-        <div class="row" hidden>
-            <div class="form-group col-2">
-                <label>Level 1</label>
-                <input type="text" name="level1" class="form-control">
-            </div>
-            <div class="form-group col-2">
-                <label>Level 2</label>
-                <input type="text" name="level2" class="form-control">
-            </div>
-            <div class="form-group col-2">
-                <label>Level 3</label>
-                <input type="text" name="level3" class="form-control">
-            </div>
-            <div class="form-group col-2">
-                <label>Level 4</label>
-                <input type="text" name="level4" class="form-control">
-            </div>
-            <div class="form-group col-2">
-                <label>Level 5</label>
-                <input type="text" name="level5" class="form-control">
-            </div>
-        </div>
-
         <div class="row">
-        <div class="form-group col-4">
-            <label>Divisi</label>
-            <select name="divisi_karyawan" id="divisi_karyawan" class="form-control" required="" onchange="clickdivisi()">
-                <option value="">Pilih Data</option>
-                @foreach($divisi as $div)
-                    @if($div->id==$schedule->divisi_scheduler)
-                        <option value="{{$div->id}}" selected>{{$div->nama_divisi}}</option>
-                    @else
-                        <option value="{{$div->id}}">{{$div->nama_divisi}}</option>
-                    @endif
-                @endforeach
-            </select>
-            <div class="invalid-feedback">
-                Kok masih kosong?
-            </div>
-            <div class="valid-feedback">
-                Nah gitu dong
+            <div class="form-group col-3">
+                <label>Nama Karyawan Pengganti (Shift Libur)</label>
+                <select name="nmkarganti" id="nmkarganti" class="form-control select2" required="">
+                    <option value="">Pilih Data</option>
+                </select>
+                <div class="invalid-feedback">
+                    Belum diisi !!
+                </div>
+                <div class="valid-feedback">
+                    Oke
+                </div>
             </div>
         </div>
-        </div>
+    </div>
+    <div class="card-footer text-left">
+        <input type="hidden" name="iddetail" id="iddetail" value="{{$id}}">
+        <input type="hidden" name="shiftganti" id="shiftganti">
+        <a class="btn btn-secondary" href="{{ route('schedule.index') }}">Back</a>
+        <button class="btn btn-primary">Save</button>
     </div>
     </form>
 </div>
 </div>
 
 @endsection
+
+@push('javascript')
+<script>
+    $(document).ready(function(){   
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    });
+
+    function getshift(id) {
+        nmkar=document.getElementById("nmkar").value;
+        tglsch=document.getElementById("tglsch").value;
+        var shiftsch = document.getElementById("shiftsch");
+        // alert(nmkar);
+        if (nmkar=='') {
+            alertify.alert('Warning', 'Mohon isi Nama Karyawan terlebih dahulu !!!');
+            return;
+        }
+        $.ajax({
+            data: 'nmkar='+nmkar+'&tglsch='+tglsch+'&id='+id,
+            url: "{{ route('getshift') }}",
+            type: "GET",
+            datatype : "json",
+            success: function(response) {
+                $('#shiftsch').html("");
+                $.each(response.listdata,function(key,item){
+                    document.getElementById("shiftganti").value=item.shift;
+                    if (item.shift.substring(0,5) == 'Pagi0') {
+                        var valueopt="Pagi";
+                    }else{
+                        var valueopt=item.shift.substring(0,5);
+                    }
+
+                    var opt = document.createElement('option');
+                    opt.disabled = true;
+                    opt.css="font-weight: bold";
+                    opt.value = item.shift;
+                    opt.innerHTML = valueopt;
+                    shiftsch.appendChild(opt);
+
+                    var opt2 = document.createElement('option');
+                    opt2.value = "Cuti";
+                    opt2.innerHTML = "Cuti";
+                    shiftsch.appendChild(opt2);
+
+                    var opt3 = document.createElement('option');
+                    opt3.value = "Sakit";
+                    opt3.innerHTML = "Sakit";
+                    shiftsch.appendChild(opt3);
+
+                    var opt4 = document.createElement('option');
+                    opt4.value = "Tanpa Keterangan";
+                    opt4.innerHTML = "Tanpa Keterangan";
+                    shiftsch.appendChild(opt4);
+                    getkaryawan(item.tanda,id,item.tanggal);
+                });
+            },
+            error: function(response) {
+                console.log('Error:', response);
+            }
+        });
+    }
+
+    function getkaryawan(lvl,id,tgl){
+        var nmkarganti = document.getElementById("nmkarganti");
+        $.ajax({
+            data: 'lvl='+lvl+'&id='+id+'&tgl='+tgl,
+            url: "{{ route('getkaryawan') }}",
+            type: "GET",
+            datatype : "json",
+            success: function(response) {
+                $('#nmkarganti').html("");
+                $.each(response.listdata,function(key,item){
+                    // alert(item.nama_karyawan);
+                    var opt = document.createElement('option');
+                    opt.value = item.karyawanid;
+                    opt.innerHTML = item.nama_karyawan;
+                    nmkarganti.appendChild(opt);
+                });
+            },
+            error: function(response) {
+                console.log('Error:', response);
+            }
+        });
+    }
+</script>
+@endpush

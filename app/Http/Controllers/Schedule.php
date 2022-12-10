@@ -591,9 +591,50 @@ class Schedule extends Controller
     public function editcalendar($id)
     {
         $schedule = M_schedule::find($id);
+        $optkar = DB::select("select b.karyawanid,a.nama_karyawan,b.tanggal from karyawan a left join schedule_detail b on a.id=b.karyawanid where b.schedule_id = '".$id."' group by b.karyawanid");
         $divisi = M_divisi::all();
         $arrbln=array('01' => "Januari",'02' => "Februari",'03' => "Maret",'04' => "April",'05' => "Mei",'06' => "Juni",'07' => "Juli",'08' => "Agustus",'09' => "Sepetember",'10' => "Oktober",'11' => "November",'12' => "Desember");
-        return view('schedule.edit',compact('schedule','arrbln','divisi'));
+        $first = M_scheduleDetail::where('schedule_id','=',$id)
+                            ->orderby('tanggal','DESC')
+                            ->first();
+        $hari=$first->tanggal;
+
+        // echo"<pre>";
+        // print_r($optkar);
+        // die();
+
+        return view('schedule.editschedule',compact('schedule','arrbln','divisi','optkar','hari','id'));
+    }
+    public function getshift(Request $request)
+    {
+        $listdata = M_scheduleDetail::where('karyawanid', '=', $request->nmkar)
+                                ->where('tanggal', '=', $request->tglsch)
+                                ->where('schedule_id', '=', $request->id)
+                                ->get();
+        return response()->json([
+            'listdata' => $listdata,
+        ]);
+    }
+    public function getkaryawan(Request $request)
+    {
+        $listdata =  DB::table('schedule_detail')
+                        ->join('karyawan', 'karyawan.id', '=', 'schedule_detail.karyawanid')
+                        ->where('schedule_detail.tanda', '=', $request->lvl)
+                        ->where('schedule_detail.tanggal', '=', $request->tgl)
+                        ->where('schedule_detail.schedule_id', '=', $request->id)
+                        ->where('schedule_detail.shift', 'like', '%Libur%')
+                        ->orderby('karyawan.nama_karyawan','ASC')
+                        ->get();
+        // echo"<pre>";
+        // print_r($listdata);
+        // die();
+        // $listdata = M_scheduleDetail::where('tanda', '=', $request->lvl)
+        //                         ->where('tanggal', '=', $request->tgl)
+        //                         ->where('schedule_id', '=', $request->id)
+        //                         ->get();
+        return response()->json([
+            'listdata' => $listdata,
+        ]);
     }
 
    
@@ -618,6 +659,20 @@ class Schedule extends Controller
                         ->with('success','Product updated successfully');
     }
 
+    public function updateshift(Request $request)
+    {
+        // echo"<pre>";
+        // print_r($request->shiftsch);
+        // die();
+       
+        DB::statement("UPDATE schedule_detail SET shift = '".$request->shiftsch."' WHERE schedule_id = '".$request->iddetail."' AND karyawanid = '".$request->nmkar."' AND tanggal = '".$request->tglsch."' ");
+
+        DB::statement("UPDATE schedule_detail SET shift = '".$request->shiftganti."' WHERE schedule_id = '".$request->iddetail."' AND karyawanid = '".$request->nmkarganti."' AND tanggal = '".$request->tglsch."' ");
+
+        Alert::success('Berhasil', 'Data berhasil terupdate');
+        return redirect()->route('calendarview',$request->iddetail);
+    }
+
     public function destroy($id)
     {
         M_schedule::where('id', '=', $id)->delete();
@@ -637,11 +692,5 @@ class Schedule extends Controller
         Alert::success('Congrats', 'Data Berhasil dihapus');
         return redirect()->route('schedule.index')
                         ->with('success','Product deleted successfully');
-    }
-
-    public function exportExcel()
-    {
-        $nama_file = 'laporan_sembako_'.date('Y-m-d_H-i-s').'.xlsx';
-        return Excel::download(new ScheduleExport, $nama_file);
     }
 }

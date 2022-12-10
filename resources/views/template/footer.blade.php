@@ -15,7 +15,7 @@
 <script src="{{asset('assets/js/scripts.js')}}"></script>
 <script src="{{asset('assets/js/custom.js')}}"></script>
 <!-- Select2 -->
-<script src="{{asset('select2/js/select2.full.min.js')}}"></script>
+<script src="{{asset('assets/modules/select2/dist/js/select2.full.min.js')}}"></script>
 <!-- <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script> -->
 
@@ -28,9 +28,10 @@
 <!-- Page Specific JS File -->
 <script src="{{asset('assets/js/page/modules-datatables.js')}}"></script>
 <script src="{{asset('alertifyjs/alertify.min.js')}}"></script>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script src="{{asset('js/jquery.table2excel.js')}}"></script>
+
+<!--Sepertinya tidak Terpakai -->
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> -->
 
 <script type="text/javascript">
  

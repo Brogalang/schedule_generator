@@ -14,7 +14,7 @@
 
 <!-- Select2 -->
 <link rel="stylesheet" href="{{asset('assets/modules/select2/dist/css/select2.min.css')}}">
-<link rel="stylesheet" href="{{asset('assets/modules/select2/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
+<link rel="stylesheet" href="{{asset('select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
 
 <!-- CSS Libraries -->
 <link rel="stylesheet" href="{{asset('assets/modules/bootstrap-daterangepicker/daterangepicker.css')}}">
@@ -81,7 +81,7 @@
  
 </style>
 
-<style type=text/css>
+<!-- <style type=text/css>
         .freezetbl {
             position: relative;
             max-height: 350px;
@@ -92,4 +92,4 @@
         top: 0;
         z-index: 2;
         }
-    </style>
+    </style> -->
