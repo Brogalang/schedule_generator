@@ -42,6 +42,11 @@ class AppServiceProvider extends ServiceProvider
                     ->orderby('order','ASC')
                     ->get()
                 );
+                $akses=array();
+                $addsess=array();
+                $updatesess=array();
+                $deletesess=array();
+                $exportsess=array();
                 $arrmenu=DB::table('menu')
                         ->join('role_menu','role_menu.menuid','=','menu.id')
                         ->where('status','=', 1)
