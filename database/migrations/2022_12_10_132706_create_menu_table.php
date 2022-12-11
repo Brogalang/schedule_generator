@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateScheduleDetailTable extends Migration
+class CreateMenuTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateScheduleDetailTable extends Migration
      */
     public function up()
     {
-        Schema::create('schedule_detail', function (Blueprint $table) {
+        Schema::create('menu', function (Blueprint $table) {
             $table->id();
-            $table->string('schedule_id');
-            $table->integer('karyawanid');
-            $table->integer('tanggal');
-            $table->integer('shift');
-            $table->integer('tanda');
-            $table->string('periode');
+            $table->string('title');
+            $table->integer('parent_id');
+            $table->integer('order');
+            $table->integer('status');
+            $table->string('action');
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ class CreateScheduleDetailTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('schedule_detail');
+        Schema::dropIfExists('menu');
     }
 }

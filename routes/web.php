@@ -32,3 +32,6 @@ Route::get('/schedule/calendar/{id}', [App\Http\Controllers\Schedule::class, 'sh
 Route::get('/schedule/detail-calendar/{id}', [App\Http\Controllers\Schedule::class, 'calendarview'])->name('calendarview');
 Route::get('/schedule/detail-calendar/edit/{id}', [App\Http\Controllers\Schedule::class, 'editcalendar'])->name('editcalendar');
 Route::get('/deletedetail', [App\Http\Controllers\Schedule::class, 'deletedetail'])->name('deletedetail');
+
+Route::resource('administrator', App\Http\Controllers\RoleMenu::class);
+Route::get('administrator/roles-menu/{id}', [App\Http\Controllers\RoleMenu::class, 'rolemenu'])->name('rolemenu');

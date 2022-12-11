@@ -9,15 +9,15 @@ use App\Models\M_divisi;
 
 class Divisi extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
         $divisi = M_divisi::get();
-        if (Auth::check()) {
-            return view('divisi.table',compact('divisi'))
-            ->with('i', (request()->input('page', 1) - 1) * 10);
-        }else{
-            return redirect('/');
-        }
+        return view('divisi.table',compact('divisi'))
+        ->with('i', (request()->input('page', 1) - 1) * 10);
     }
 
    
@@ -42,14 +42,6 @@ class Divisi extends Controller
                         ->with('success','Product created successfully.');
     }
 
-    
-    public function show(Product $product)
-    {
-        $menus = Menu::where('parent_id', '=', 0)->get();
-        return view('datakaryawan.show',compact('product','menus'));
-    }
-
-   
     public function edit(M_divisi $divisi)
     {
         return view('divisi.edit',compact('divisi'));

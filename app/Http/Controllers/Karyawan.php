@@ -77,14 +77,6 @@ class Karyawan extends Controller
                         ->with('success','Product created successfully.');
     }
 
-    
-    public function show(Product $product)
-    {
-        $menus = Menu::where('parent_id', '=', 0)->get();
-        return view('datakaryawan.show',compact('product','menus'));
-    }
-
-   
     public function edit(M_karyawan $karyawan)
     {
         $jabatan = M_karyawan::select('jabatan')

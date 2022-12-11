@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
+use App\Models\M_menu;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,5 +26,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Paginator::useBootstrap();
+        view()->share('administrator', M_menu::where('status','=', 2)->orderby('order','ASC')->get());
+        view()->share('menus', M_menu::where('status','=', 1)->orderby('order','ASC')->get());
     }
 }

@@ -23,20 +23,20 @@
         <label>Kode Divisi</label>
         <input type="text" class="form-control" name="kode_divisi" required="">
         <div class="invalid-feedback">
-            Kok masih kosong?
+            Belum diisi !!
         </div>
         <div class="valid-feedback">
-            Nah gitu dong
+            Oke
         </div>
         </div>
         <div class="form-group">
         <label>Nama Divisi</label>
         <input type="text" class="form-control" name="nama_divisi" required="">
         <div class="invalid-feedback">
-            Kok masih kosong?
+            Belum diisi !!
         </div>
         <div class="valid-feedback">
-            Nah gitu dong
+            Oke
         </div>
         </div>
     </div>

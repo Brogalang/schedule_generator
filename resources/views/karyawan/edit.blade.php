@@ -24,10 +24,10 @@
         <label>Nama Karyawan</label>
         <input type="text" class="form-control" name="nama_karyawan" value="{{$karyawan->nama_karyawan}}" required="">
         <div class="invalid-feedback">
-            Kok masih kosong?
+            Belum diisi !!
         </div>
         <div class="valid-feedback">
-            Nah gitu dong
+            Oke
         </div>
         </div>
 
@@ -43,10 +43,10 @@
             @endfor
         </select>
         <div class="invalid-feedback">
-            Kok masih kosong?
+            Belum diisi !!
         </div>
         <div class="valid-feedback">
-            Nah gitu dong
+            Oke
         </div>
         </div>
 
@@ -63,10 +63,10 @@
             @endforeach
         </select>
         <div class="invalid-feedback">
-            Kok masih kosong?
+            Belum diisi !!
         </div>
         <div class="valid-feedback">
-            Nah gitu dong
+            Oke
         </div>
         </div>
 

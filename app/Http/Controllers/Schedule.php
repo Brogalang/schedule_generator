@@ -9,8 +9,6 @@ use App\Models\M_karyawan;
 use App\Models\M_divisi;
 use App\Models\M_schedule;
 use App\Models\M_scheduleDetail;
-use Excel;
-use App\Exports\ScheduleExport;
 use DB;
 use Redirect;
 
@@ -661,10 +659,6 @@ class Schedule extends Controller
 
     public function updateshift(Request $request)
     {
-        // echo"<pre>";
-        // print_r($request->shiftsch);
-        // die();
-       
         DB::statement("UPDATE schedule_detail SET shift = '".$request->shiftsch."' WHERE schedule_id = '".$request->iddetail."' AND karyawanid = '".$request->nmkar."' AND tanggal = '".$request->tglsch."' ");
 
         DB::statement("UPDATE schedule_detail SET shift = '".$request->shiftganti."' WHERE schedule_id = '".$request->iddetail."' AND karyawanid = '".$request->nmkarganti."' AND tanggal = '".$request->tglsch."' ");

@@ -89,10 +89,10 @@
                 @endforeach
             </select>
             <div class="invalid-feedback">
-                Kok masih kosong?
+                Belum diisi !!
             </div>
             <div class="valid-feedback">
-                Nah gitu dong
+                Oke
             </div>
         </div>
         </div>

@@ -23,10 +23,10 @@
         <label>Nama Karyawan</label><span class="text-danger" aria-hidden="true">&starf;</span>
         <input type="text" class="form-control" name="nama_karyawan" required="">
         <div class="invalid-feedback">
-            Kok masih kosong?
+            Belum diisi !!
         </div>
         <div class="valid-feedback">
-            Nah gitu dong
+            Oke
         </div>
         </div>
 
@@ -38,10 +38,10 @@
             @endfor
         </select>
         <div class="invalid-feedback">
-            Kok masih kosong?
+            Belum diisi !!
         </div>
         <div class="valid-feedback">
-            Nah gitu dong
+            Oke
         </div>
         </div>
 
@@ -54,10 +54,10 @@
             @endforeach
         </select>
         <div class="invalid-feedback">
-            Kok masih kosong?
+            Belum diisi !!
         </div>
         <div class="valid-feedback">
-            Nah gitu dong
+            Oke
         </div>
         </div>
         <!---->
