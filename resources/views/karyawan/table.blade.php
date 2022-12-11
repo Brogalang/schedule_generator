@@ -14,7 +14,9 @@
 <!--Start main-->
 <div class="card">
     <div class="col-sm-2">
-        <a href="{{ route('karyawan.create') }}" class="btn btn-info">Tambah Data</a><br>
+        @if($addsess[12]==1)
+            <a href="{{ route('karyawan.create') }}" class="btn btn-info">Tambah Data</a><br>
+        @endif
     </div>
     <div class="card-body">
     <div class="table-responsive">
@@ -59,8 +61,12 @@
                 {{--<form action="{{ route('karyawan.destroy',$kar->id) }}" method="POST">
                     @csrf
                     @method('DELETE')--}}
-                    <a class="btn btn-info" href="{{ route('karyawan.edit',$kar->id) }}" ><i class="fa fa-edit" title="Edit Data"></i></a>
-                    <button type="submit" class="btn btn-danger" onClick="deletekary('{{$kar->id}}')"><i class="fa fa-trash" title="Delete Data"></i></button>
+                    @if($updatesess[12]==1)
+                        <a class="btn btn-info" href="{{ route('karyawan.edit',$kar->id) }}" ><i class="fa fa-edit" title="Edit Data"></i></a>
+                    @endif
+                    @if($deletesess[12]==1)
+                        <button type="submit" class="btn btn-danger" onClick="deletekary('{{$kar->id}}')"><i class="fa fa-trash" title="Delete Data"></i></button>
+                    @endif
                 {{--</form>--}}
             </td>
             </tr>

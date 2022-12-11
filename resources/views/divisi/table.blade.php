@@ -13,7 +13,9 @@
 <div class="section-body">
 <!--Start main-->
     <div class="col-sm-2">
-        <a href="{{ route('divisi.create') }}" class="btn btn-info">Tambah Data</a><br>
+        @if($addsess[11]==1)
+            <a href="{{ route('divisi.create') }}" class="btn btn-info">Tambah Data</a><br>
+        @endif
     </div>
     <div class="card-body">
     <div class="table-responsive">
@@ -36,8 +38,12 @@
                 {{--<form action="{{ route('divisi.destroy',$div->id) }}" method="POST">
                     @csrf
                     @method('DELETE')--}}
-                    <a class="btn btn-info" href="{{ route('divisi.edit',$div->id) }}" ><i class="fa fa-edit" title="Edit Data"></i></a>
-                    <button type="submit" class="btn btn-danger" onclick="deletediv('{{$div->id}}')"><i class="fa fa-trash" title="Delete Data"></i></button>
+                    @if($updatesess[11]==1)
+                        <a class="btn btn-info" href="{{ route('divisi.edit',$div->id) }}" ><i class="fa fa-edit" title="Edit Data"></i></a>
+                    @endif
+                    @if($deletesess[11]==1)
+                        <button type="submit" class="btn btn-danger" onclick="deletediv('{{$div->id}}')"><i class="fa fa-trash" title="Delete Data"></i></button>
+                    @endif
                 {{--</form>--}}
             </td>
         </tr>

@@ -10,6 +10,6 @@ class M_roleMenu extends Model
     use HasFactory;
     protected $table = 'role_menu';
     protected $fillable = [
-        'id','karyawanid','menuid','add','update','delete','export','created_at','updated_at'
+        'id','karyawanid','menuid','akses','add','update','delete','export','created_at','updated_at'
     ];
 }

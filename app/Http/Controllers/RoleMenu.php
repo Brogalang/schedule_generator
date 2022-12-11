@@ -62,9 +62,16 @@ class RoleMenu extends Controller
                     $export[$i]=0;
                 }
 
+                if ($add[$i]==1 || $update[$i]==1 || $delete[$i]==1 || $export[$i]==1) {
+                    $akses[$i]=1;
+                }else{
+                    $akses[$i]=0;
+                }
+
                 $M_roleMenu[$i] = new M_roleMenu();     
                 $M_roleMenu[$i]->karyawanid = $request->iduser;       
                 $M_roleMenu[$i]->menuid = $arrtitle[$i];    
+                $M_roleMenu[$i]->akses = $akses[$i];    
                 $M_roleMenu[$i]->add = $add[$i];    
                 $M_roleMenu[$i]->update = $update[$i];    
                 $M_roleMenu[$i]->delete = $delete[$i];    
@@ -80,6 +87,7 @@ class RoleMenu extends Controller
                 'role' => ''
             ]);
         }
+        // die();
         Alert::success('Congrats', 'You\'ve Successfully Saved Data');
         return Redirect::back();
     }

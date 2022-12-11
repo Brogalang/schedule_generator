@@ -96,7 +96,9 @@
             {{--<form action="{{ route('deletedetail',$idDetail) }}" method="GET">
                 @csrf--}}
                 <a class="btn btn-secondary" href="{{ route('schedule.index') }}">Back</a>
-                <button type="submit" id="delButton" class="btn btn-danger" onclick="deletedetail('{{$idDetail}}')">Delete Schedule</button>
+                @if($deletesess[13]==1)
+                    <button type="submit" id="delButton" class="btn btn-danger" onclick="deletedetail('{{$idDetail}}')">Delete Schedule</button>
+                @endif
             {{--</form>--}}
         @else
             <form action="{{ route('schedule.store') }}" method="POST" novalidate="">
@@ -106,7 +108,9 @@
                 @csrf
                 <input type="hidden" name="metode" id="metode" value="insertlvl">
                 <a class="btn btn-secondary" href="{{ route('schedule.index') }}">Back</a>
-                <button class="btn btn-primary">Generate</button>
+                @if($addsess[13]==1)
+                    <button class="btn btn-primary">Generate</button>
+                @endif
             </form>
         @endif
     </div>

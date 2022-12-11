@@ -79,12 +79,12 @@
                         <input type="hidden" name="export[{{$j}}]" name="export[{{$j}}]" value="0">
                         @if($ctrole>0)
                             @if($dataexport[$arr->id]==1)
-                                <input type="checkbox" id="export{{$j}}]" name="export{{$j}}]" checked>
+                                <input type="checkbox" id="export[{{$j}}]" name="export[{{$j}}]" checked>
                             @else
-                                <input type="checkbox" id="export{{$j}}]" name="export{{$j}}]">
+                                <input type="checkbox" id="export[{{$j}}]" name="export[{{$j}}]">
                             @endif
                         @else
-                            <input type="checkbox" id="export{{$j}}]" name="export{{$j}}]">
+                            <input type="checkbox" id="export[{{$j}}]" name="export[{{$j}}]">
                         @endif
                     </td>
                 @endif

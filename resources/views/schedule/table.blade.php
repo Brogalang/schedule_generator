@@ -14,7 +14,9 @@
 <!--Start main-->
 <div class="card">
     <div class="col-sm-2">
-        <a href="{{ route('schedule.create') }}" class="btn btn-info">Tambah Data</a><br>
+        @if($addsess[13]==1)
+            <a href="{{ route('schedule.create') }}" class="btn btn-info">Tambah Data</a><br>
+        @endif
     </div>
     <div class="card-body">
     <div class="table-responsive">
@@ -68,12 +70,20 @@
             </td>
             <td style="text-align:center">
                 {{--<form action="{{ route('schedule.destroy',$sch->id) }}" method="POST">--}}
-                    <a class="btn btn-outline-success" href="{{ route('schedule.show',$sch->id) }}" ><i class="fa fa-eye" title="Show Data"></i></a>
-                    <a class="btn btn-outline-dark" href="{{ route('calendarview',$sch->id) }}" ><i class="fa fa-calendar" title="Show Generate"></i></a>
-                    <a class="btn btn-info" href="{{ route('schedule.edit',$sch->id) }}" ><i class="fa fa-edit" title="Edit Data"></i></a>
+                    @if($addsess[13]==1)
+                        <a class="btn btn-outline-success" href="{{ route('schedule.show',$sch->id) }}" ><i class="fa fa-eye" title="Show Data"></i></a>
+                    @endif
+                    @if($exportsess[13]==1)
+                        <a class="btn btn-outline-dark" href="{{ route('calendarview',$sch->id) }}" ><i class="fa fa-calendar" title="Show Generate"></i></a>
+                    @endif
+                    @if($updatesess[13]==1)
+                        <a class="btn btn-info" href="{{ route('schedule.edit',$sch->id) }}" ><i class="fa fa-edit" title="Edit Data"></i></a>
+                    @endif
                     {{--@csrf
                     @method('DELETE')--}}
-                    <button type="submit" class="btn btn-danger" onClick="deletetask('{{$sch->id}}')"><i class="fa fa-trash" title="Delete Data"></i></button>
+                    @if($deletesess[13]==1)
+                        <button type="submit" class="btn btn-danger" onClick="deletetask('{{$sch->id}}')"><i class="fa fa-trash" title="Delete Data"></i></button>
+                    @endif
                 </form>
             </td>
         </tr>
