@@ -28,11 +28,11 @@ class Schedule extends Controller
                     ->orderby('schedule.bulan_scheduler','ASC')
                     ->get();
         foreach ($schedule as $key => $value) {
-            $hlvl1[$value->id] =  DB::table('schedule')->join('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule_detail.tanda','=','1')->where('schedule.id','=',$value->id)->count();
-            $hlvl2[$value->id] =  DB::table('schedule')->join('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule_detail.tanda','=','2')->where('schedule.id','=',$value->id)->count();
-            $hlvl3[$value->id] =  DB::table('schedule')->join('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule_detail.tanda','=','3')->where('schedule.id','=',$value->id)->count();
-            $hlvl4[$value->id] =  DB::table('schedule')->join('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule_detail.tanda','=','4')->where('schedule.id','=',$value->id)->count();
-            $hlvl5[$value->id] =  DB::table('schedule')->join('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule_detail.tanda','=','5')->where('schedule.id','=',$value->id)->count();
+            $hlvl1[$value->id] =  DB::table('schedule')->leftjoin('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule_detail.tanda','=','1')->where('schedule.id','=',$value->id)->count();
+            $hlvl2[$value->id] =  DB::table('schedule')->leftjoin('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule_detail.tanda','=','2')->where('schedule.id','=',$value->id)->count();
+            $hlvl3[$value->id] =  DB::table('schedule')->leftjoin('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule_detail.tanda','=','3')->where('schedule.id','=',$value->id)->count();
+            $hlvl4[$value->id] =  DB::table('schedule')->leftjoin('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule_detail.tanda','=','4')->where('schedule.id','=',$value->id)->count();
+            $hlvl5[$value->id] =  DB::table('schedule')->leftjoin('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule_detail.tanda','=','5')->where('schedule.id','=',$value->id)->count();
         }
         
         $arrbln=array('01' => "Januari",'02' => "Februari",'03' => "Maret",'04' => "April",'05' => "Mei",'06' => "Juni",'07' => "Juli",'08' => "Agustus",'09' => "Sepetember",'10' => "Oktober",'11' => "November",'12' => "Desember");
@@ -440,17 +440,17 @@ class Schedule extends Controller
     public function show(M_schedule $schedule)
     {
         $divisi = M_divisi::all();
-        $hlvl1 =  DB::table('karyawan')->join('divisi', 'divisi.id', '=', 'karyawan.divisi_karyawan')->where('divisi.id','=',$schedule->divisi_scheduler)->where('karyawan.level_karyawan','=','1')->count();
-        $hlvl2 =  DB::table('karyawan')->join('divisi', 'divisi.id', '=', 'karyawan.divisi_karyawan')->where('divisi.id','=',$schedule->divisi_scheduler)->where('karyawan.level_karyawan','=','2')->count();
-        $hlvl3 =  DB::table('karyawan')->join('divisi', 'divisi.id', '=', 'karyawan.divisi_karyawan')->where('divisi.id','=',$schedule->divisi_scheduler)->where('karyawan.level_karyawan','=','3')->count();
-        $hlvl4 =  DB::table('karyawan')->join('divisi', 'divisi.id', '=', 'karyawan.divisi_karyawan')->where('divisi.id','=',$schedule->divisi_scheduler)->where('karyawan.level_karyawan','=','4')->count();
-        $hlvl5 =  DB::table('karyawan')->join('divisi', 'divisi.id', '=', 'karyawan.divisi_karyawan')->where('divisi.id','=',$schedule->divisi_scheduler)->where('karyawan.level_karyawan','=','5')->count();
+        $hlvl1 =  DB::table('karyawan')->leftjoin('divisi', 'divisi.id', '=', 'karyawan.divisi_karyawan')->where('divisi.id','=',$schedule->divisi_scheduler)->where('karyawan.level_karyawan','=','1')->count();
+        $hlvl2 =  DB::table('karyawan')->leftjoin('divisi', 'divisi.id', '=', 'karyawan.divisi_karyawan')->where('divisi.id','=',$schedule->divisi_scheduler)->where('karyawan.level_karyawan','=','2')->count();
+        $hlvl3 =  DB::table('karyawan')->leftjoin('divisi', 'divisi.id', '=', 'karyawan.divisi_karyawan')->where('divisi.id','=',$schedule->divisi_scheduler)->where('karyawan.level_karyawan','=','3')->count();
+        $hlvl4 =  DB::table('karyawan')->leftjoin('divisi', 'divisi.id', '=', 'karyawan.divisi_karyawan')->where('divisi.id','=',$schedule->divisi_scheduler)->where('karyawan.level_karyawan','=','4')->count();
+        $hlvl5 =  DB::table('karyawan')->leftjoin('divisi', 'divisi.id', '=', 'karyawan.divisi_karyawan')->where('divisi.id','=',$schedule->divisi_scheduler)->where('karyawan.level_karyawan','=','5')->count();
 
-        $ctlvl1 =  DB::table('schedule')->join('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule.id','=',$schedule->id)->where('schedule_detail.tanda','=','1')->count();
-        $ctlvl2 =  DB::table('schedule')->join('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule.id','=',$schedule->id)->where('schedule_detail.tanda','=','2')->count();
-        $ctlvl3 =  DB::table('schedule')->join('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule.id','=',$schedule->id)->where('schedule_detail.tanda','=','3')->count();
-        $ctlvl4 =  DB::table('schedule')->join('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule.id','=',$schedule->id)->where('schedule_detail.tanda','=','4')->count();
-        $ctlvl5 =  DB::table('schedule')->join('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule.id','=',$schedule->id)->where('schedule_detail.tanda','=','5')->count();
+        $ctlvl1 =  DB::table('schedule')->leftjoin('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule.id','=',$schedule->id)->where('schedule_detail.tanda','=','1')->count();
+        $ctlvl2 =  DB::table('schedule')->leftjoin('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule.id','=',$schedule->id)->where('schedule_detail.tanda','=','2')->count();
+        $ctlvl3 =  DB::table('schedule')->leftjoin('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule.id','=',$schedule->id)->where('schedule_detail.tanda','=','3')->count();
+        $ctlvl4 =  DB::table('schedule')->leftjoin('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule.id','=',$schedule->id)->where('schedule_detail.tanda','=','4')->count();
+        $ctlvl5 =  DB::table('schedule')->leftjoin('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule.id','=',$schedule->id)->where('schedule_detail.tanda','=','5')->count();
 
         $idDetail=$schedule->id;
         // echo"<pre>";
@@ -616,7 +616,7 @@ class Schedule extends Controller
     public function getkaryawan(Request $request)
     {
         $listdata =  DB::table('schedule_detail')
-                        ->join('karyawan', 'karyawan.id', '=', 'schedule_detail.karyawanid')
+                        ->leftjoin('karyawan', 'karyawan.id', '=', 'schedule_detail.karyawanid')
                         ->where('schedule_detail.tanda', '=', $request->lvl)
                         ->where('schedule_detail.tanggal', '=', $request->tgl)
                         ->where('schedule_detail.schedule_id', '=', $request->id)
