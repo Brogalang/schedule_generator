@@ -34,7 +34,7 @@
         <label>Level Karyawan</label><span class="text-danger" aria-hidden="true">&starf;</span>
         <select name="level_karyawan" id="level_karyawan" class="form-control" required="">
             @for($i=1;$i<=5;$i++)
-                <option value="{{$i}}">{{$i}}</option>
+                <option value="{{$i}}">{{$i-1}}</option>
             @endfor
         </select>
         <div class="invalid-feedback">

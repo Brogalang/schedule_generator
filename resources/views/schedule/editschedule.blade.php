@@ -56,6 +56,10 @@
                 </div>
             </div>
             <div class="form-group col-2">
+                <label>Shift Awal</label>
+                <input id="labelshift" class="form-control" disabled>
+            </div>
+            <div class="form-group col-2">
                 <label>Shift</label>
                 <select name="shiftsch" id="shiftsch" class="form-control select2" required="">
                     <option value="">Pilih Data</option>
@@ -151,6 +155,8 @@
                     opt4.innerHTML = "Tanpa Keterangan";
                     shiftsch.appendChild(opt4);
                     getkaryawan(item.tanda,id,item.tanggal);
+
+                    document.getElementById('labelshift').value=valueopt;
                 });
             },
             error: function(response) {

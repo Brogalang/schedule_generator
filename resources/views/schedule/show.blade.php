@@ -44,7 +44,7 @@
         </div>
         <div class="row">
             <div class="form-group col-2">
-                <label>Level 1</label>
+                <label>Level 0</label>
                 <h5>{{$hlvl1}} Orang</h5>
                 @if($ctlvl1>0)
                     <button class="btn btn-danger">Data Sudah ada</button>
@@ -53,7 +53,7 @@
                 @endif
             </div>
             <div class="form-group col-2">
-                <label>Level 2</label>
+                <label>Level 1</label>
                 <h5>{{$hlvl2}} Orang</h5>
                 @if($ctlvl2>0)
                     <button class="btn btn-danger">Data Sudah ada</button>
@@ -62,7 +62,7 @@
                 @endif
             </div>
             <div class="form-group col-2">
-                <label>Level 3</label>
+                <label>Level 2</label>
                 <h5>{{$hlvl3}} Orang</h5>
                 @if($ctlvl3>0)
                     <button class="btn btn-danger">Data Sudah ada</button>
@@ -71,7 +71,7 @@
                 @endif
             </div>
             <div class="form-group col-2">
-                <label>Level 4</label>
+                <label>Level 3</label>
                 <h5>{{$hlvl4}} Orang</h5>
                 @if($ctlvl4>0)
                     <button class="btn btn-danger">Data Sudah ada</button>
@@ -80,7 +80,7 @@
                 @endif
             </div>
             <div class="form-group col-2">
-                <label>Level 5</label>
+                <label>Level 4</label>
                 <h5>{{$hlvl5}} Orang</h5>
                 @if($ctlvl5>0)
                     <button class="btn btn-danger">Data Sudah ada</button>

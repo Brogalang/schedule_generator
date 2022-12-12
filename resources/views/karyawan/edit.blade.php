@@ -36,9 +36,9 @@
         <select name="level_karyawan" id="level_karyawan" class="form-control" required="">
             @for($i=1;$i<=5;$i++)
                 @if($i==$karyawan->level_karyawan)
-                    <option value="{{$i}}" selected>{{$i}}</option>
+                    <option value="{{$i}}" selected>{{$i-1}}</option>
                 @else
-                    <option value="{{$i}}">{{$i}}</option>
+                    <option value="{{$i}}">{{$i-1}}</option>
                 @endif
             @endfor
         </select>

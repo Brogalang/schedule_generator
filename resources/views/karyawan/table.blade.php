@@ -44,7 +44,7 @@
             <td><b>{{$kar->nama_karyawan}}</b> <br> Lama Bekerja {{$thnlamanya[$kar->id]}}</td>
             <td>{{$kar->jabatan}}</td>
             <td>{{$kar->nama_divisi}}</td>
-            <td>{{$kar->level_karyawan}}</td>
+            <td>{{$kar->level_karyawan-1}}</td>
             <td>{{$kar->jk}}</td>
             @if(date('d-m-Y',strtotime($kar->tanggallahir))=='01-01-1970')
                 <td></td>

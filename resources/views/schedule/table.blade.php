@@ -39,31 +39,31 @@
             <td>
                 @if($hlvl1[$sch->id]!=0)
                     <span class="badge badge-success">
-                        Level 1 <br>
+                        Level 0 <br>
                         Done
                     </span>
                 @endif
                 @if($hlvl2[$sch->id]!=0)
                     <span class="badge badge-success">
-                        Level 2 <br>
+                        Level 1 <br>
                         Done
                     </span>
                 @endif
                 @if($hlvl3[$sch->id]!=0)
                     <span class="badge badge-success">
-                        Level 3 <br>
+                        Level 2 <br>
                         Done
                     </span>
                 @endif
                 @if($hlvl4[$sch->id]!=0)
                     <span class="badge badge-success">
-                        Level 4 <br>
+                        Level 3 <br>
                         Done
                     </span>
                 @endif
                 @if($hlvl5[$sch->id]!=0)
                     <span class="badge badge-success">
-                        Level 5 <br>
+                        Level 4 <br>
                         Done
                     </span>
                 @endif
