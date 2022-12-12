@@ -22,7 +22,7 @@ class Karyawan extends Controller
         // $divisi = M_divisi::all();
         $karyawan = DB::table('karyawan')
                     ->select('karyawan.id as id','divisi.nama_divisi as nama_divisi','nama_karyawan','level_karyawan','divisi_karyawan','jabatan','alamat','jk','tanggallahir','tmptlahir','tglmasuk')
-                    ->join('divisi', 'divisi.id', '=', 'karyawan.divisi_karyawan')
+                    ->leftjoin('divisi', 'divisi.id', '=', 'karyawan.divisi_karyawan')
                     ->orderby('level_karyawan','ASC')
                     ->orderby('nama_karyawan','ASC')
                     ->get();

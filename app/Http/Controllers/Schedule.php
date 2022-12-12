@@ -23,7 +23,7 @@ class Schedule extends Controller
         // $schedule = M_schedule::paginate(10);
         $schedule =  DB::table('schedule')
                     ->select('schedule.bulan_scheduler as bulan_scheduler','divisi.nama_divisi as nama_divisi','schedule.id as id')
-                    ->join('divisi', 'divisi.id', '=', 'schedule.divisi_scheduler')
+                    ->leftjoin('divisi', 'divisi.id', '=', 'schedule.divisi_scheduler')
                     ->orderby('divisi.id','ASC')
                     ->orderby('schedule.bulan_scheduler','ASC')
                     ->get();
