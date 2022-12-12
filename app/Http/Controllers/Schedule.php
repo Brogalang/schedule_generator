@@ -429,7 +429,8 @@ class Schedule extends Controller
             }
             Alert::success('Congrats', 'Berhasil Generate');
 
-            return Redirect::back();
+            // return Redirect::back();
+            return redirect()->route('calendarview',$idsch);
         } 
         ### END IF
     
