@@ -27,6 +27,7 @@
                 No
             </th>
             <th>Nama Kayawan</th>
+            <th>Pendidikan</th>
             <th>Jabatan</th>
             <th>Divisi</th>
             <th>Level</th>
@@ -42,6 +43,7 @@
             <tr>
             <td>{{ ++$i }}</td>
             <td><b>{{$kar->nama_karyawan}}</b> <br> Lama Bekerja {{$thnlamanya[$kar->id]}}</td>
+            <td>{{$kar->pendidikan}}</td>
             <td>{{$kar->jabatan}}</td>
             <td>{{$kar->nama_divisi}}</td>
             <td>{{$kar->level_karyawan-1}}</td>

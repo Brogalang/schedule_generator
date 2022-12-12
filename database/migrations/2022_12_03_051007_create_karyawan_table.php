@@ -17,6 +17,7 @@ class CreateKaryawanTable extends Migration
             $table->id();
             $table->string('nik');
             $table->string('nama_karyawan');
+            $table->string('pendidikan');
             $table->string('level_karyawan');
             $table->string('divisi_karyawan');
             $table->string('jabatan');

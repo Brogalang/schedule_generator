@@ -21,7 +21,7 @@ class Karyawan extends Controller
         // $karyawan = M_karyawan::paginate(10);
         // $divisi = M_divisi::all();
         $karyawan = DB::table('karyawan')
-                    ->select('karyawan.id as id','divisi.nama_divisi as nama_divisi','nama_karyawan','level_karyawan','divisi_karyawan','jabatan','alamat','jk','tanggallahir','tmptlahir','tglmasuk')
+                    ->select('karyawan.id as id','divisi.nama_divisi as nama_divisi','nama_karyawan','level_karyawan','divisi_karyawan','jabatan','alamat','jk','tanggallahir','tmptlahir','tglmasuk','karyawan.pendidikan')
                     ->leftjoin('divisi', 'divisi.id', '=', 'karyawan.divisi_karyawan')
                     ->orderby('level_karyawan','ASC')
                     ->orderby('nama_karyawan','ASC')
@@ -57,7 +57,8 @@ class Karyawan extends Controller
                             ->distinct()
                             ->get();
         $divisi = M_divisi::all();
-        return view('karyawan.add',compact('divisi','jabatan'));
+        $pend=array("S3"=>"S3","S2"=>"S2","S1"=>"S1","D4"=>"D4","D3"=>"D3","SMA"=>"SMA","SMP"=>"SMP");
+        return view('karyawan.add',compact('divisi','jabatan','pend'));
     }
 
    
@@ -83,8 +84,9 @@ class Karyawan extends Controller
                             ->distinct()
                             ->get();
         $divisi = M_divisi::all();
+        $pend=array("S3"=>"S3","S2"=>"S2","S1"=>"S1","D4"=>"D4","D3"=>"D3","SMA"=>"SMA","SMP"=>"SMP");
         $jnskelamin=array("Laki-laki" => "Laki - laki","Perempuan" => "Perempuan");
-        return view('karyawan.edit',compact('karyawan','divisi','jabatan','jnskelamin'));
+        return view('karyawan.edit',compact('karyawan','divisi','jabatan','jnskelamin','pend'));
     }
 
     public function update(Request $request, M_karyawan $karyawan)

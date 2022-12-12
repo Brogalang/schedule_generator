@@ -31,6 +31,16 @@
         </div>
 
         <div class="form-group">
+        <label>Pendidikan</label>
+        <select name="pendidikan" id="pendidikan" class="form-control select2">
+            <option value="">Pilih Data</option>
+            @foreach($pend as $key => $val)
+                <option value="{{$val}}">{{$val}}</option>
+            @endforeach
+        </select>
+        </div>
+
+        <div class="form-group">
         <label>Level Karyawan</label><span class="text-danger" aria-hidden="true">&starf;</span>
         <select name="level_karyawan" id="level_karyawan" class="form-control" required="">
             @for($i=1;$i<=5;$i++)
