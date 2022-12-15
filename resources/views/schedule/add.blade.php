@@ -138,7 +138,7 @@
                         '<tr>\
                             <td align=center>'+x+'</td>\
                             <td align=left>'+item.nama_karyawan+'</td>\
-                            <td align=left>'+(item.level_karyawan-1)+'</td>\
+                            <td align=left>'+item.level_karyawan+'</td>\
                         </tr>'
                     );
                 });

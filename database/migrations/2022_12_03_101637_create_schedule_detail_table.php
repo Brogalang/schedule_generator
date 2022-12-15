@@ -18,9 +18,10 @@ class CreateScheduleDetailTable extends Migration
             $table->string('schedule_id');
             $table->integer('karyawanid');
             $table->integer('tanggal');
-            $table->integer('shift');
-            $table->integer('tanda');
-            $table->string('periode');
+            $table->string('shift');
+            $table->string('shift_new')->nullable();
+            $table->integer('tanda')->nullable();
+            $table->string('periode')->nullable();
             $table->timestamps();
         });
     }

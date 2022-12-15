@@ -71,9 +71,20 @@ class Schedule extends Controller
 
     public function showdivisi(Request $request)
     {
-        $listdata = M_karyawan::where('divisi_karyawan', '=', $request->hasil)
-                                ->orderby('level_karyawan','asc')
-                                ->get();
+        $listdata= DB::select("
+                    select nama_karyawan,
+                    case 
+                    when level_karyawan = 1 then 0 
+                    when level_karyawan = 2 then 1 
+                    when level_karyawan = 3 then 2 
+                    when level_karyawan = 4 then 3 
+                    when level_karyawan = 5 then 4 
+                    when level_karyawan = 'Non Shift 1' then 'Non Shift 1'
+                    when level_karyawan = 'Non Shift 2' then 'Non Shift 2'
+                    end as 'level_karyawan'
+                    from karyawan
+                    where divisi_karyawan = '".$request->hasil."' order by level_karyawan asc
+                    ");
         return response()->json([
             'listdata' => $listdata,
         ]);
@@ -609,37 +620,37 @@ class Schedule extends Controller
                             ->first();
         $query= DB::select("
                     select karyawan.nama_karyawan as nama,
-                    (case when tanggal = 1 then shift else 'asu' end ) as '1' ,
-                    (case when tanggal = 2 then shift else 'asu' end ) as '2' ,
-                    (case when tanggal = 3 then shift else 'asu' end ) as '3' ,
-                    (case when tanggal = 4 then shift else 'asu' end ) as '4' ,
-                    (case when tanggal = 5 then shift else 'asu' end ) as '5' ,
-                    (case when tanggal = 6 then shift else 'asu' end ) as '6' ,
-                    (case when tanggal = 7 then shift else 'asu' end ) as '7' ,
-                    (case when tanggal = 8 then shift else 'asu' end ) as '8' ,
-                    (case when tanggal = 9 then shift else 'asu' end ) as '9' ,
-                    (case when tanggal = 10 then shift else 'asu' end ) as '10',
-                    (case when tanggal = 11 then shift else 'asu' end ) as '11', 
-                    (case when tanggal = 12 then shift else 'asu' end ) as '12', 
-                    (case when tanggal = 13 then shift else 'asu' end ) as '13', 
-                    (case when tanggal = 14 then shift else 'asu' end ) as '14', 
-                    (case when tanggal = 15 then shift else 'asu' end ) as '15', 
-                    (case when tanggal = 16 then shift else 'asu' end ) as '16', 
-                    (case when tanggal = 17 then shift else 'asu' end ) as '17', 
-                    (case when tanggal = 18 then shift else 'asu' end ) as '18', 
-                    (case when tanggal = 19 then shift else 'asu' end ) as '19', 
-                    (case when tanggal = 20 then shift else 'asu' end ) as '20', 
-                    (case when tanggal = 21 then shift else 'asu' end ) as '21', 
-                    (case when tanggal = 22 then shift else 'asu' end ) as '22', 
-                    (case when tanggal = 23 then shift else 'asu' end ) as '23', 
-                    (case when tanggal = 24 then shift else 'asu' end ) as '24', 
-                    (case when tanggal = 25 then shift else 'asu' end ) as '25', 
-                    (case when tanggal = 26 then shift else 'asu' end ) as '26', 
-                    (case when tanggal = 27 then shift else 'asu' end ) as '27', 
-                    (case when tanggal = 28 then shift else 'asu' end ) as '28', 
-                    (case when tanggal = 29 then shift else 'asu' end ) as '29', 
-                    (case when tanggal = 30 then shift else 'asu' end ) as '30', 
-                    (case when tanggal = 31 then shift else 'asu' end ) as '31'
+                    (case when shift_new!='' then case when tanggal=1 then shift_new else 'asu' end else case when tanggal=1 then shift else 'asu' end end ) as '1',
+                    (case when shift_new!='' then case when tanggal=2 then shift_new else 'asu' end else case when tanggal=2 then shift else 'asu' end end ) as '2',
+                    (case when shift_new!='' then case when tanggal=3 then shift_new else 'asu' end else case when tanggal=3 then shift else 'asu' end end ) as '3',
+                    (case when shift_new!='' then case when tanggal=4 then shift_new else 'asu' end else case when tanggal=4 then shift else 'asu' end end ) as '4',
+                    (case when shift_new!='' then case when tanggal=5 then shift_new else 'asu' end else case when tanggal=5 then shift else 'asu' end end ) as '5',
+                    (case when shift_new!='' then case when tanggal=6 then shift_new else 'asu' end else case when tanggal=6 then shift else 'asu' end end ) as '6',
+                    (case when shift_new!='' then case when tanggal=7 then shift_new else 'asu' end else case when tanggal=7 then shift else 'asu' end end ) as '7',
+                    (case when shift_new!='' then case when tanggal=8 then shift_new else 'asu' end else case when tanggal=8 then shift else 'asu' end end ) as '8',
+                    (case when shift_new!='' then case when tanggal=9 then shift_new else 'asu' end else case when tanggal=9 then shift else 'asu' end end ) as '9',
+                    (case when shift_new!='' then case when tanggal=10 then shift_new else 'asu' end else case when tanggal=10 then shift else 'asu' end end ) as '10',
+                    (case when shift_new!='' then case when tanggal=11 then shift_new else 'asu' end else case when tanggal=11 then shift else 'asu' end end ) as '11',
+                    (case when shift_new!='' then case when tanggal=12 then shift_new else 'asu' end else case when tanggal=12 then shift else 'asu' end end ) as '12',
+                    (case when shift_new!='' then case when tanggal=13 then shift_new else 'asu' end else case when tanggal=13 then shift else 'asu' end end ) as '13',
+                    (case when shift_new!='' then case when tanggal=14 then shift_new else 'asu' end else case when tanggal=14 then shift else 'asu' end end ) as '14',
+                    (case when shift_new!='' then case when tanggal=15 then shift_new else 'asu' end else case when tanggal=15 then shift else 'asu' end end ) as '15',
+                    (case when shift_new!='' then case when tanggal=16 then shift_new else 'asu' end else case when tanggal=16 then shift else 'asu' end end ) as '16',
+                    (case when shift_new!='' then case when tanggal=17 then shift_new else 'asu' end else case when tanggal=17 then shift else 'asu' end end ) as '17',
+                    (case when shift_new!='' then case when tanggal=18 then shift_new else 'asu' end else case when tanggal=18 then shift else 'asu' end end ) as '18',
+                    (case when shift_new!='' then case when tanggal=19 then shift_new else 'asu' end else case when tanggal=19 then shift else 'asu' end end ) as '19',
+                    (case when shift_new!='' then case when tanggal=20 then shift_new else 'asu' end else case when tanggal=20 then shift else 'asu' end end ) as '20',
+                    (case when shift_new!='' then case when tanggal=21 then shift_new else 'asu' end else case when tanggal=21 then shift else 'asu' end end ) as '21',
+                    (case when shift_new!='' then case when tanggal=22 then shift_new else 'asu' end else case when tanggal=22 then shift else 'asu' end end ) as '22',
+                    (case when shift_new!='' then case when tanggal=23 then shift_new else 'asu' end else case when tanggal=23 then shift else 'asu' end end ) as '23',
+                    (case when shift_new!='' then case when tanggal=24 then shift_new else 'asu' end else case when tanggal=24 then shift else 'asu' end end ) as '24',
+                    (case when shift_new!='' then case when tanggal=25 then shift_new else 'asu' end else case when tanggal=25 then shift else 'asu' end end ) as '25',
+                    (case when shift_new!='' then case when tanggal=26 then shift_new else 'asu' end else case when tanggal=26 then shift else 'asu' end end ) as '26',
+                    (case when shift_new!='' then case when tanggal=27 then shift_new else 'asu' end else case when tanggal=27 then shift else 'asu' end end ) as '27',
+                    (case when shift_new!='' then case when tanggal=28 then shift_new else 'asu' end else case when tanggal=28 then shift else 'asu' end end ) as '28',
+                    (case when shift_new!='' then case when tanggal=29 then shift_new else 'asu' end else case when tanggal=29 then shift else 'asu' end end ) as '29',
+                    (case when shift_new!='' then case when tanggal=30 then shift_new else 'asu' end else case when tanggal=30 then shift else 'asu' end end ) as '30',
+                    (case when shift_new!='' then case when tanggal=31 then shift_new else 'asu' end else case when tanggal=31 then shift else 'asu' end end ) as '31'
                     from schedule_detail
                     left join karyawan on schedule_detail.karyawanid=karyawan.id
                     where schedule_detail.schedule_id = '".$id."'
@@ -702,8 +713,9 @@ class Schedule extends Controller
     public function editcalendar($id)
     {
         $schedule = M_schedule::find($id);
-        $optkar = DB::select("select b.karyawanid,a.nama_karyawan,b.tanggal from karyawan a left join schedule_detail b on a.id=b.karyawanid where b.schedule_id = '".$id."' group by b.karyawanid");
+        $optkar = DB::select("select b.karyawanid,a.nama_karyawan,b.tanggal,b.tanda from karyawan a left join schedule_detail b on a.id=b.karyawanid where b.schedule_id = '".$id."' group by b.karyawanid order by b.tanda asc");
         $divisi = M_divisi::all();
+        $level=array('Non Shift 1'=>'Non Shift 1','Non Shift 2'=>'Non Shift 2','1'=>'0','2'=>'1','3'=>'2','4'=>'3','5'=>'4');
         $arrbln=array('01' => "Januari",'02' => "Februari",'03' => "Maret",'04' => "April",'05' => "Mei",'06' => "Juni",'07' => "Juli",'08' => "Agustus",'09' => "Sepetember",'10' => "Oktober",'11' => "November",'12' => "Desember");
         $first = M_scheduleDetail::where('schedule_id','=',$id)
                             ->orderby('tanggal','DESC')
@@ -714,7 +726,7 @@ class Schedule extends Controller
         // print_r($optkar);
         // die();
 
-        return view('schedule.editschedule',compact('schedule','arrbln','divisi','optkar','hari','id'));
+        return view('schedule.editschedule',compact('schedule','arrbln','divisi','optkar','hari','id','level'));
     }
     public function getshift(Request $request)
     {
@@ -728,21 +740,46 @@ class Schedule extends Controller
     }
     public function getkaryawan(Request $request)
     {
-        $listdata =  DB::table('schedule_detail')
-                        ->leftjoin('karyawan', 'karyawan.id', '=', 'schedule_detail.karyawanid')
-                        ->where('schedule_detail.tanda', '=', $request->lvl)
-                        ->where('schedule_detail.tanggal', '=', $request->tgl)
-                        ->where('schedule_detail.schedule_id', '=', $request->id)
-                        ->where('schedule_detail.shift', 'like', '%Libur%')
-                        ->orderby('karyawan.nama_karyawan','ASC')
-                        ->get();
+        if ($request->gantishift==1) {
+            if ($request->roll==1) {
+                $listdata= DB::select("
+                        select *
+                        from schedule_detail a
+                        left join karyawan b on b.id=a.karyawanid
+                        where a.tanda='".$request->lvl."' and a.tanggal='".$request->tgl."' and a.schedule_id='".$request->id."' and a.shift like '%%'
+                        order by b.nama_karyawan asc
+                        ");
+            }else{
+                $listdata= DB::select("
+                        select *
+                        from schedule_detail a
+                        left join karyawan b on b.id=a.karyawanid
+                        where a.tanda='".$request->lvl."' and a.tanggal='".$request->tgl."' and a.schedule_id='".$request->id."' and a.shift like '%Libur%'
+                        order by b.nama_karyawan asc
+                        ");
+            }
+        }else{
+            if ($request->roll==1) {
+                $listdata= DB::select("
+                        select *
+                        from schedule_detail a
+                        left join karyawan b on b.id=a.karyawanid
+                        where a.tanda='".$request->lvl."' and a.tanggal='".$request->tgl."' and a.schedule_id='".$request->id."' and a.shift not like '%%'
+                        order by b.nama_karyawan asc
+                        ");
+            }else{
+                $listdata= DB::select("
+                        select *
+                        from schedule_detail a
+                        left join karyawan b on b.id=a.karyawanid
+                        where a.tanda='".$request->lvl."' and a.tanggal='".$request->tgl."' and a.schedule_id='".$request->id."' and a.shift not like '%".$request->shift."%'
+                        order by b.nama_karyawan asc
+                        ");
+            }
+        }
         // echo"<pre>";
-        // print_r($listdata);
+        // print_r($request->gantishift);
         // die();
-        // $listdata = M_scheduleDetail::where('tanda', '=', $request->lvl)
-        //                         ->where('tanggal', '=', $request->tgl)
-        //                         ->where('schedule_id', '=', $request->id)
-        //                         ->get();
         return response()->json([
             'listdata' => $listdata,
         ]);
@@ -780,12 +817,29 @@ class Schedule extends Controller
 
     public function updateshift(Request $request)
     {
-        DB::statement("UPDATE schedule_detail SET shift = '".$request->shiftsch."' WHERE schedule_id = '".$request->iddetail."' AND karyawanid = '".$request->nmkar."' AND tanggal = '".$request->tglsch."' ");
-
-        DB::statement("UPDATE schedule_detail SET shift = '".$request->shiftganti."' WHERE schedule_id = '".$request->iddetail."' AND karyawanid = '".$request->nmkarganti."' AND tanggal = '".$request->tglsch."' ");
+        if ($request->rollback) {
+            DB::statement("UPDATE schedule_detail SET shift_new = '".$request->shiftganti."' WHERE schedule_id = '".$request->iddetail."' AND karyawanid = '".$request->nmkar."' AND tanggal = '".$request->tglsch."' "); ## Ganti Karyawan Awal ke status seperti CT dll
+        }else{
+            if ($request->gantish) {
+                DB::statement("UPDATE schedule_detail SET shift_new = '".$request->shiftsch."' WHERE schedule_id = '".$request->iddetail."' AND karyawanid = '".$request->nmkar."' AND tanggal = '".$request->tglsch."' "); ## Ganti Karyawan Awal ke status seperti CT dll
+    
+                DB::statement("UPDATE schedule_detail SET shift_new = '".$request->shiftganti."' WHERE schedule_id = '".$request->iddetail."' AND karyawanid = '".$request->nmkarganti."' AND tanggal = '".$request->tglsch."' "); ## Ganti Status Karyawan pengganti menjadi shift karyawan awal
+            }else{
+                $ctsh=M_scheduleDetail::where('karyawanid','=',$request->nmkarganti)
+                                        ->where('schedule_id','=',$request->iddetail)
+                                        ->where('tanggal','=',$request->tglsch)
+                                        ->first();
+                DB::statement("UPDATE schedule_detail SET shift_new = '".$ctsh->shift."' WHERE schedule_id = '".$request->iddetail."' AND karyawanid = '".$request->nmkar."' AND tanggal = '".$request->tglsch."' "); ## Ganti Karyawan Awal ke status seperti CT dll
+    
+                DB::statement("UPDATE schedule_detail SET shift_new = '".$request->shiftganti."' WHERE schedule_id = '".$request->iddetail."' AND karyawanid = '".$request->nmkarganti."' AND tanggal = '".$request->tglsch."' "); ## Ganti Status Karyawan pengganti menjadi shift karyawan awal
+                // print_r($ctsh->shift);
+            }
+        }
+        // print_r($request->shiftsch);
+        // die();
 
         Alert::success('Congrats', 'You\'ve Successfully Updated Data');
-        return redirect()->route('calendarview',$request->iddetail);
+        // return redirect()->route('calendarview',$request->iddetail);
     }
 
     public function destroy($id)
