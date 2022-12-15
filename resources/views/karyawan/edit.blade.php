@@ -46,15 +46,21 @@
         </div>
 
         <div class="form-group">
+        <label>Seminar</label>
+        <input name="seminar" id="seminar" class="form-control" value="{{$karyawan->seminar}}">
+        </div>
+
+        <div class="form-group">
         <label>Level Karyawan</label>
         <select name="level_karyawan" id="level_karyawan" class="form-control" required="">
-            @for($i=1;$i<=5;$i++)
-                @if($i==$karyawan->level_karyawan)
-                    <option value="{{$i}}" selected>{{$i-1}}</option>
+            <option value="">Pilih Data</option>
+            @foreach($level as $lvl => $val)
+                @if($lvl==$karyawan->level_karyawan)
+                <option value="{{$lvl}}" selected>{{$val}}</option>
                 @else
-                    <option value="{{$i}}">{{$i-1}}</option>
+                    <option value="{{$lvl}}">{{$val}}</option>
                 @endif
-            @endfor
+            @endforeach
         </select>
         <div class="invalid-feedback">
             Belum diisi !!
@@ -89,10 +95,10 @@
         <label>Jabatan</label>
         <select name="jabatan" id="jabatan" class="form-control select2bs4">
             @foreach($jabatan as $jab)
-                @if($i==$karyawan->jabatan)
+                @if($jab->jabatan==$karyawan->jabatan)
                     <option value="{{$jab->jabatan}}" selected>{{$jab->jabatan}}</option>
                 @else
-                    <option value="{{$jab->jabatan}}" selected>{{$jab->jabatan}}</option>
+                    <option value="{{$jab->jabatan}}">{{$jab->jabatan}}</option>
                 @endif
             @endforeach
         </select>
@@ -133,6 +139,20 @@
         <div class="form-group">
         <label>Alamat</label>
         <textarea name="alamat" id="alamat" class="form-control" value="{{$karyawan->alamat}}">{{$karyawan->alamat}}</textarea>
+        </div>
+
+        <strong><label>Kontak Darurat</label></strong>
+        <div class="form-group">
+        <label>Nama</label>
+        <input name="nm_darurat" id="nm_darurat" class="form-control" value="{{$karyawan->nm_darurat}}">
+        </div>
+        <div class="form-group">
+        <label>Hubungan</label>
+        <input name="hub_darurat" id="hub_darurat" class="form-control" value="{{$karyawan->hub_darurat}}">
+        </div>
+        <div class="form-group">
+        <label>No Telp</label>
+        <input name="telp_darurat" id="telp_darurat" class="form-control" value="{{$karyawan->telp_darurat}}">
         </div>
     </div>
     <div class="card-footer text-right">

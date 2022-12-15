@@ -18,7 +18,7 @@
     @method('PUT')
     <div class="card-header">
         <h4>Add Schedule</h4><br>
-
+        <input type="text" id="idEdit" name="idEdit" value="{{$schedule->id}}" hidden>
         <a class="btn btn-secondary" href="{{ route('schedule.index') }}">Back</a>
         <button class="btn btn-primary">Save Schedule</button>
     </div>

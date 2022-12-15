@@ -141,7 +141,7 @@
                     shiftsch.appendChild(opt);
 
                     var opt2 = document.createElement('option');
-                    opt2.value = "Cuti";
+                    opt2.value = "CT";
                     opt2.innerHTML = "Cuti";
                     shiftsch.appendChild(opt2);
 
@@ -151,8 +151,8 @@
                     shiftsch.appendChild(opt3);
 
                     var opt4 = document.createElement('option');
-                    opt4.value = "Tanpa Keterangan";
-                    opt4.innerHTML = "Tanpa Keterangan";
+                    opt4.value = "A";
+                    opt4.innerHTML = "Alpha";
                     shiftsch.appendChild(opt4);
                     getkaryawan(item.tanda,id,item.tanggal);
 

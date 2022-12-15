@@ -71,7 +71,7 @@ class Divisi extends Controller
     public function deletediv(Request $request)
     {
         M_divisi::where('id', '=', $request->idDiv)->delete();
-        Alert::success('Congrats', 'Data Berhasil dihapus');
+        Alert::success('Congrats', 'You\'ve Successfully Deleted Data');
         return redirect()->route('divisi.index')
                         ->with('success','Product deleted successfully');
     }

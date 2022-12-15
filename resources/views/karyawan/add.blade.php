@@ -41,11 +41,17 @@
         </div>
 
         <div class="form-group">
+        <label>Seminar</label>
+        <input name="seminar" id="seminar" class="form-control">
+        </div>
+
+        <div class="form-group">
         <label>Level Karyawan</label><span class="text-danger" aria-hidden="true">&starf;</span>
         <select name="level_karyawan" id="level_karyawan" class="form-control" required="">
-            @for($i=1;$i<=5;$i++)
-                <option value="{{$i}}">{{$i-1}}</option>
-            @endfor
+        <option value="">Pilih Data</option>
+        @foreach($level as $lvl => $val)
+            <option value="{{$lvl}}">{{$val}}</option>
+        @endforeach
         </select>
         <div class="invalid-feedback">
             Belum diisi !!
@@ -110,6 +116,20 @@
         <div class="form-group">
         <label>Alamat</label>
         <textarea name="alamat" id="alamat" class="form-control"></textarea>
+        </div>
+        
+        <strong><label>Kontak Darurat</label></strong>
+        <div class="form-group">
+        <label>Nama</label>
+        <input name="nm_darurat" id="nm_darurat" class="form-control">
+        </div>
+        <div class="form-group">
+        <label>Hubungan</label>
+        <input name="hub_darurat" id="hub_darurat" class="form-control">
+        </div>
+        <div class="form-group">
+        <label>No Telp</label>
+        <input name="telp_darurat" id="telp_darurat" class="form-control">
         </div>
         
     </div>

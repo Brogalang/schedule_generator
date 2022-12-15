@@ -44,6 +44,26 @@
         </div>
         <div class="row">
             <div class="form-group col-2">
+                <label>Non Shift 1</label>
+                <h5>{{$hNon1}} Orang</h5>
+                @if($ctNon1>0)
+                    <button class="btn btn-danger">Data Sudah ada</button>
+                @else
+                    <button class="btn btn-info">Data Kosong</button>
+                @endif
+            </div>
+            <div class="form-group col-2">
+                <label>Non Shift 2</label>
+                <h5>{{$hNon2}} Orang</h5>
+                @if($ctNon2>0)
+                    <button class="btn btn-danger">Data Sudah ada</button>
+                @else
+                    <button class="btn btn-info">Data Kosong</button>
+                @endif
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-2">
                 <label>Level 0</label>
                 <h5>{{$hlvl1}} Orang</h5>
                 @if($ctlvl1>0)

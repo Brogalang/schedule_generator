@@ -38,6 +38,7 @@
               {{--<a href="{{ route('logout') }}" class="dropdown-item has-icon text-danger">
                 <i class="fas fa-sign-out-alt"></i> Logout
               </a>--}}
+            <a class="dropdown-item has-icon" href="{{route('resetpassword.create')}}"><i class="fas fa-key"></i>Ganti Password</a>
             <a class="dropdown-item has-icon text-danger" href="{{ route('logout') }}"
                 onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">

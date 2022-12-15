@@ -10,6 +10,6 @@ class M_karyawan extends Model
     use HasFactory;
     protected $table = 'karyawan';
     protected $fillable = [
-        'id','nama_karyawan','pendidikan','level_karyawan','divisi_karyawan','jabatan','alamat','jk','tanggallahir','tmptlahir','tglmasuk','created_at','updated_at'
+        'id','nama_karyawan','pendidikan','seminar','nm_darurat','hub_darurat','telp_darurat','level_karyawan','divisi_karyawan','jabatan','alamat','jk','tanggallahir','tmptlahir','tglmasuk','created_at','updated_at'
     ];
 }

@@ -3,10 +3,10 @@
 @section('content')
 @include('sweetalert::alert')
 <div class="section-header">
-    <h1>Divisi</h1>
+    <h1>Unit Kerja</h1>
     <div class="section-header-breadcrumb">
     <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-    <div class="breadcrumb-item">Divisi</a></div>
+    <div class="breadcrumb-item">Unit Kerja</a></div>
     </div>
 </div>
 
@@ -23,8 +23,8 @@
         <thead>                                 
             <tr>
             <th class="text-center">No</th>
-            <th>Kode Divisi</th>
-            <th>Nama Divisi</th>
+            <th>Kode Unit Kerja</th>
+            <th>Nama Unit Kerja</th>
             <th>Action</th>
             </tr>
         </thead>

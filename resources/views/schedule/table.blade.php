@@ -37,6 +37,18 @@
             <td>{{$arrbln[substr($sch->bulan_scheduler,5,2)]}} {{substr($sch->bulan_scheduler,0,4)}}</td>
             <td>{{$sch->nama_divisi}}</td>
             <td>
+                @if($hNon1[$sch->id]!=0)
+                    <span class="badge badge-success">
+                        Non Shift 1<br>
+                        Done
+                    </span>
+                @endif
+                @if($hNon2[$sch->id]!=0)
+                    <span class="badge badge-success">
+                        Non Shift 2<br>
+                        Done
+                    </span>
+                @endif
                 @if($hlvl1[$sch->id]!=0)
                     <span class="badge badge-success">
                         Level 0 <br>

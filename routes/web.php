@@ -19,6 +19,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::resource('divisi', App\Http\Controllers\Divisi::class);
 Route::get('/deletediv', [App\Http\Controllers\Divisi::class, 'deletediv'])->name('deletediv');
 
+Route::resource('jamkerja', App\Http\Controllers\JamKerja::class);
+
+Route::resource('resetpassword', App\Http\Controllers\GantiPassword::class);
+
 Route::resource('karyawan', App\Http\Controllers\Karyawan::class);
 Route::get('/deletekary', [App\Http\Controllers\Karyawan::class, 'deletekary'])->name('deletekary');
 
@@ -35,3 +39,4 @@ Route::get('/deletedetail', [App\Http\Controllers\Schedule::class, 'deletedetail
 
 Route::resource('administrator', App\Http\Controllers\RoleMenu::class);
 Route::get('administrator/roles-menu/{id}', [App\Http\Controllers\RoleMenu::class, 'rolemenu'])->name('rolemenu');
+Route::get('/deletedata', [App\Http\Controllers\RoleMenu::class, 'deletedata'])->name('deletedata');

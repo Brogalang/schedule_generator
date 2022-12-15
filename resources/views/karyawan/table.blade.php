@@ -27,8 +27,8 @@
                 No
             </th>
             <th>Nama Kayawan</th>
-            <th>Pendidikan</th>
-            <th>Jabatan</th>
+            <th>Pendidikan / Seminar</th>
+            <th>Contact Darurat</th>
             <th>Divisi</th>
             <th>Level</th>
             <th>Jenis Kelamin</th>
@@ -42,11 +42,11 @@
         @foreach($karyawan as $kar)                         
             <tr>
             <td>{{ ++$i }}</td>
-            <td><b>{{$kar->nama_karyawan}}</b> <br> Lama Bekerja {{$thnlamanya[$kar->id]}}</td>
-            <td>{{$kar->pendidikan}}</td>
-            <td>{{$kar->jabatan}}</td>
+            <td><b>{{$kar->nama_karyawan}}</b> <br> Lama Bekerja {{$thnlamanya[$kar->id]}} <br>Jabatan : {{$kar->jabatan}}</td>
+            <td>{{$kar->pendidikan}} / {{$kar->seminar}}</td>
+            <td nowrap>{{$kar->nm_darurat}}<br>({{$kar->hub_darurat}})<br>{{$kar->telp_darurat}}</td>
             <td>{{$kar->nama_divisi}}</td>
-            <td>{{$kar->level_karyawan-1}}</td>
+            <td>{{$level[$kar->level_karyawan]}}</td>
             <td>{{$kar->jk}}</td>
             @if(date('d-m-Y',strtotime($kar->tanggallahir))=='01-01-1970')
                 <td></td>

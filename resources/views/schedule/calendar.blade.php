@@ -36,6 +36,7 @@
             @for($i=1; $i <= $hari2 ; $i++)
                 <th style="text-align:center">{{$i}}</th>
             @endfor
+            <th nowrap>Total Jam Kerja</th>
             </tr>
         </thead>
         <tbody>        
@@ -46,11 +47,13 @@
                 @foreach($val as $key1 => $val1)
                     @foreach($val1 as $key2 => $val2)
                         @if(substr($val2,0,5)=='Pagi0')
-                            <td>Pagi</td>
+                            <td>P</td>
                         @elseif(substr($val2,0,5)=='Siang')
-                            <td>{{substr($val2,0,5)}}</td>
+                            <td>S</td>
                         @elseif(substr($val2,0,5)=='Malam')
-                            <td>{{substr($val2,0,5)}}</td>
+                            <td>M</td>
+                        @elseif(substr($val2,0,5)=='Libur')
+                            <td style="background-color: red;"><font color="black">L</font></td>
                         @else
                             <td style="background-color: red;"><font color="black">{{substr($val2,0,5)}}</font></td>
                         @endif
@@ -63,6 +66,7 @@
                         <td>{{substr($val->$i,0,5)}}</td>
                     @endif
                 @endfor--}}
+                <td><b>{{$arrjmljam[$key]}}</b></td>
             </tr>
         @endforeach
         </tbody>

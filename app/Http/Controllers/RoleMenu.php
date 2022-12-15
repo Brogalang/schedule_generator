@@ -8,7 +8,9 @@ use Illuminate\Http\Request;
 use App\Models\M_roleMenu;
 use App\Models\M_menu;
 use App\Models\User;
+use App\Models\M_divisi;
 use DB;
+use Auth;
 use Redirect;
 
 class RoleMenu extends Controller
@@ -20,14 +22,33 @@ class RoleMenu extends Controller
     public function index()
     {
         $rolemenu = M_roleMenu::get();
-        $arruser= User::where('role','!=','superadmin')->get();
+        Auth::user()->divisi;
+        if (Auth::user()->role!='') {
+            $arruser = DB::table('users')
+                        ->select('users.id as id','users.divisi as divisi','users.name as name','divisi.nama_divisi as nama_divisi','users.jabatan as jabatan','users.email as email')
+                        ->leftjoin('divisi', 'divisi.id', '=', 'users.divisi')
+                        ->orderby('users.created_at','ASC')
+                        ->get();
+        }else{
+            $arruser = DB::table('users')
+                        ->select('users.id as id','users.divisi as divisi','users.name as name','divisi.nama_divisi as nama_divisi','users.jabatan as jabatan','users.email as email')
+                        ->leftjoin('divisi', 'divisi.id', '=', 'users.divisi')
+                        ->where('role','!=','superadmin')
+                        ->orderby('users.created_at','ASC')
+                        ->get();
+        }
+        // $arruser= User::where('role','!=','superadmin')->get();
         return view('administrator.table',compact('rolemenu','arruser'))
         ->with('i', (request()->input('page', 1) - 1) * 10);
     }
 
     public function create()
     {
-        return view('administrator.add');
+        $jabatan = User::select('jabatan')
+        ->distinct()
+        ->get();
+        $divisi = M_divisi::all();
+        return view('administrator.add',compact('divisi','jabatan'));
     }
 
     public function store(Request $request)
@@ -83,19 +104,27 @@ class RoleMenu extends Controller
             User::create([
                 'email' => $request->email,
                 'name' => $request->name,
+                'jabatan' => $request->jabatan,
+                'divisi' => $request->divisi,
                 'password' => Hash::make($request->password),
                 'role' => ''
             ]);
         }
         // die();
         Alert::success('Congrats', 'You\'ve Successfully Saved Data');
-        return Redirect::back();
+        // return Redirect::back();
+        return redirect()->route('administrator.index')
+                        ->with('success','Product created successfully.');
     }
 
     public function edit($id)
     {
+        $jabatan = User::select('jabatan')
+        ->distinct()
+        ->get();
+        $divisi = M_divisi::all();
         $arruser= User::where('id','=',$id)->first();
-        return view('administrator.edit',compact('arruser'));
+        return view('administrator.edit',compact('arruser','jabatan','divisi'));
     }
 
     public function rolemenu($id)
@@ -103,6 +132,11 @@ class RoleMenu extends Controller
         
         $arruser= User::where('id','=',$id)->first();
         $arrmenu= M_menu::where('status','=','1')->get();
+        // $arrmenu = DB::table('role_menu')
+        //             ->leftjoin('menu', 'menu.id', '=', 'role_menu.menuid')
+        //             ->where('karyawanid','=',$id)
+        //             ->orderby('menu.order','ASC')
+        //             ->get();
         $arrrole= M_roleMenu::where('karyawanid','=',$id)->get();
         $ctrole= M_roleMenu::where('karyawanid','=',$id)->count();
         $dataadd=array();
@@ -118,24 +152,20 @@ class RoleMenu extends Controller
             }
         }
         // echo"<pre>";
-        // print_r($dataadd);
+        // print_r($arrmenu);
         // die();
         $i=1;
         $j=0;
         return view('administrator.addrole',compact('arruser','arrmenu','i','j','dataadd','dataupdate','datadelete','dataexport','ctrole'));
     }
 
-    public function update(Request $request, M_divisi $divisi)
+    public function update(Request $request, User $users)
     {
-        $request->validate([
-            'kode_divisi' => 'required',
-            'nama_divisi' => 'required',
-        ]);
-    
-        $divisi->update($request->all());
+        // $users->update($request->all());
+        DB::statement("UPDATE users set name= '".$request->name."',divisi='".$request->divisi."',jabatan='".$request->jabatan."', email='".$request->email."',password='".Hash::make($request->password)."' WHERE id = '".$request->idEdit."'");
         
         Alert::success('Congrats', 'You\'ve Successfully Updated Data');
-        return redirect()->route('divisi.index')
+        return redirect()->route('administrator.index')
                         ->with('success','Product updated successfully');
     }
 
@@ -146,11 +176,11 @@ class RoleMenu extends Controller
                         ->with('success','Product deleted successfully');
     }
 
-    public function deletediv(Request $request)
+    public function deletedata(Request $request)
     {
-        M_divisi::where('id', '=', $request->idDiv)->delete();
+        User::where('id', '=', $request->idData)->delete();
         Alert::success('Congrats', 'Data Berhasil dihapus');
-        return redirect()->route('divisi.index')
+        return redirect()->route('administrator.index')
                         ->with('success','Product deleted successfully');
     }
 }

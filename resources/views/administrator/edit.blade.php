@@ -13,8 +13,9 @@
 
 <div class="section-body">
 <div class="card">
-    <form method="POST" action="{{ route('administrator.store') }}">
+    <form method="POST" action="{{ route('administrator.update',$arruser->id) }}">
     @csrf
+    @method('PUT')
     <div class="card-header">
         <h4>Tambah User</h4>
     </div>
@@ -22,6 +23,39 @@
         <div class="form-group">
         <label for="name">Name {{$arruser->name}}</label>
         <input id="name" type="text" value="{{$arruser->name}}" class="form-control @error('name') is-invalid @enderror" name="name" required autocomplete="name" autofocus>
+        </div>
+        <div class="form-group">
+        <label>Divisi</label>
+        <select name="divisi" id="divisi" class="form-control" required="">
+            <option value="">Pilih Data</option>
+            @foreach($divisi as $div)
+                @if($div->id==$arruser->divisi)
+                    <option value="{{$div->id}}" selected>{{$div->kode_divisi}} - {{$div->nama_divisi}}</option>
+                @else
+                    <option value="{{$div->id}}">{{$div->kode_divisi}} - {{$div->nama_divisi}}</option>
+                @endif
+            @endforeach
+        </select>
+        <div class="invalid-feedback">
+            Belum diisi !!
+        </div>
+        <div class="valid-feedback">
+            Oke
+        </div>
+        </div>
+
+        <!---->
+        <div class="form-group">
+        <label>Jabatan</label>
+        <select name="jabatan" id="jabatan" class="form-control select2bs4">
+            @foreach($jabatan as $jab)
+                @if($jab->jabatan=$arruser->jabatan)
+                    <option value="{{$jab->jabatan}}" selected>{{$jab->jabatan}}</option>
+                @else
+                    <option value="{{$jab->jabatan}}" selected>{{$jab->jabatan}}</option>
+                @endif
+            @endforeach
+        </select>
         </div>
         <div class="form-group">
         <label for="email">Email</label>
@@ -33,6 +67,7 @@
         </div>
     </div>
     <div class="card-footer text-right">
+        <input type="text" id="idEdit" name="idEdit" value="{{$arruser->id}}" hidden>
         <a class="btn btn-secondary" href="{{ route('administrator.index') }}">Back</a>
         <button class="btn btn-primary">Submit</button>
     </div>

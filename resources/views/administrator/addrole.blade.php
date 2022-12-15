@@ -45,30 +45,44 @@
                         <input type="checkbox" id="add[{{$j}}]" name="add[{{$j}}]">
                     @endif
                 </td>
-                <td>
-                    <input type="hidden" name="update[{{$j}}]" name="update[{{$j}}]" value="0">
-                    @if($ctrole>0)
-                        @if($dataupdate[$arr->id]==1)
-                            <input type="checkbox" id="update[{{$j}}]" name="update[{{$j}}]" checked>
+                @if($arr->title == 'Jam Kerja')
+                    <td>
+                        <input type="hidden" name="update[{{$j}}]" name="update[{{$j}}]" value="0">
+                        <input type="checkbox" id="update[{{$j}}]" name="update[{{$j}}]" disabled>
+                    </td>
+                @else
+                    <td>
+                        <input type="hidden" name="update[{{$j}}]" name="update[{{$j}}]" value="0">
+                        @if($ctrole>0)
+                            @if($dataupdate[$arr->id]==1)
+                                <input type="checkbox" id="update[{{$j}}]" name="update[{{$j}}]" checked>
+                            @else
+                                <input type="checkbox" id="update[{{$j}}]" name="update[{{$j}}]">
+                            @endif
                         @else
                             <input type="checkbox" id="update[{{$j}}]" name="update[{{$j}}]">
                         @endif
-                    @else
-                        <input type="checkbox" id="update[{{$j}}]" name="update[{{$j}}]">
-                    @endif
-                </td>
-                <td>
-                    <input type="hidden" name="delete[{{$j}}]" name="delete[{{$j}}]" value="0">
-                    @if($ctrole>0)
-                        @if($datadelete[$arr->id]==1)
-                            <input type="checkbox" id="delete[{{$j}}]" name="delete[{{$j}}]" checked>
+                    </td>
+                @endif
+                @if($arr->title == 'Jam Kerja')
+                    <td>
+                        <input type="hidden" name="delete[{{$j}}]" name="delete[{{$j}}]" value="0">
+                        <input type="checkbox" id="delete[{{$j}}]" name="delete[{{$j}}]" disabled>
+                    </td>
+                @else
+                    <td>
+                        <input type="hidden" name="delete[{{$j}}]" name="delete[{{$j}}]" value="0">
+                        @if($ctrole>0)
+                            @if($datadelete[$arr->id]==1)
+                                <input type="checkbox" id="delete[{{$j}}]" name="delete[{{$j}}]" checked>
+                            @else
+                                <input type="checkbox" id="delete[{{$j}}]" name="delete[{{$j}}]">
+                            @endif
                         @else
                             <input type="checkbox" id="delete[{{$j}}]" name="delete[{{$j}}]">
                         @endif
-                    @else
-                        <input type="checkbox" id="delete[{{$j}}]" name="delete[{{$j}}]">
-                    @endif
-                </td>
+                    </td>
+                @endif
                 @if($arr->title != 'Schedule')
                     <td>
                         <input type="hidden" name="export[{{$j}}]" name="export[{{$j}}]" value="0">

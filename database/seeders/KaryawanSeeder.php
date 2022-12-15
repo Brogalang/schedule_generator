@@ -16,11 +16,11 @@ class KaryawanSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create('id_ID');
-    	for($i = 1; $i <= 50; $i++){
+    	for($i = 1; $i <= 4; $i++){
     		DB::table('karyawan')->insert([
     			'nama_karyawan' => $faker->name,
-    			'level_karyawan' => $faker->numberBetween(1,1),
-    			'divisi_karyawan' => $faker->numberBetween(1,1),
+    			'level_karyawan' => '5',
+    			'divisi_karyawan' => '2',
     		]);
     	}
     }

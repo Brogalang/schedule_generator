@@ -20,12 +20,25 @@ class Karyawan extends Controller
     {
         // $karyawan = M_karyawan::paginate(10);
         // $divisi = M_divisi::all();
-        $karyawan = DB::table('karyawan')
-                    ->select('karyawan.id as id','divisi.nama_divisi as nama_divisi','nama_karyawan','level_karyawan','divisi_karyawan','jabatan','alamat','jk','tanggallahir','tmptlahir','tglmasuk','karyawan.pendidikan')
-                    ->leftjoin('divisi', 'divisi.id', '=', 'karyawan.divisi_karyawan')
-                    ->orderby('level_karyawan','ASC')
-                    ->orderby('nama_karyawan','ASC')
-                    ->get();
+        // print_r(Auth::user()->divisi);
+        // die();
+        $level=array('Non Shift 1'=>'Non Shift 1','Non Shift 2'=>'Non Shift 2','1'=>'0','2'=>'1','3'=>'2','4'=>'3','5'=>'4');
+        if (Auth::user()->divisi !='') {
+            $karyawan = DB::table('karyawan')
+                        ->select('karyawan.id as id','divisi.nama_divisi as nama_divisi','nama_karyawan','level_karyawan','divisi_karyawan','jabatan','alamat','jk','tanggallahir','tmptlahir','tglmasuk','karyawan.pendidikan','nm_darurat','hub_darurat','telp_darurat','seminar')
+                        ->leftjoin('divisi', 'divisi.id', '=', 'karyawan.divisi_karyawan')
+                        ->where('karyawan.divisi_karyawan','=',Auth::user()->divisi)
+                        ->orderby('level_karyawan','ASC')
+                        ->orderby('nama_karyawan','ASC')
+                        ->get();
+        }else{
+            $karyawan = DB::table('karyawan')
+                        ->select('karyawan.id as id','divisi.nama_divisi as nama_divisi','nama_karyawan','level_karyawan','divisi_karyawan','jabatan','alamat','jk','tanggallahir','tmptlahir','tglmasuk','karyawan.pendidikan','nm_darurat','hub_darurat','telp_darurat','seminar')
+                        ->leftjoin('divisi', 'divisi.id', '=', 'karyawan.divisi_karyawan')
+                        ->orderby('level_karyawan','ASC')
+                        ->orderby('nama_karyawan','ASC')
+                        ->get();
+        }
 
         $tanggal = new DateTime('1993-01-15');
 
@@ -43,7 +56,7 @@ class Karyawan extends Controller
         }
       
         if (Auth::check()) {
-            return view('karyawan.table',compact('karyawan','thnlamanya'))
+            return view('karyawan.table',compact('karyawan','thnlamanya','level'))
             ->with('i', (request()->input('page', 1) - 1) * 10);
         }else{
             return redirect('/');
@@ -56,9 +69,14 @@ class Karyawan extends Controller
         $jabatan = M_karyawan::select('jabatan')
                             ->distinct()
                             ->get();
-        $divisi = M_divisi::all();
+        if (Auth::user()->divisi !='') {
+            $divisi = M_divisi::where('id','=',Auth::user()->divisi)->get();
+        }else{
+            $divisi = M_divisi::all();
+        }
+        $level=array('Non Shift 1'=>'Non Shift 1','Non Shift 2'=>'Non Shift 2','1'=>'0','2'=>'1','3'=>'2','4'=>'3','5'=>'4');
         $pend=array("S3"=>"S3","S2"=>"S2","S1"=>"S1","D4"=>"D4","D3"=>"D3","SMA"=>"SMA","SMP"=>"SMP");
-        return view('karyawan.add',compact('divisi','jabatan','pend'));
+        return view('karyawan.add',compact('divisi','jabatan','pend','level'));
     }
 
    
@@ -83,10 +101,15 @@ class Karyawan extends Controller
         $jabatan = M_karyawan::select('jabatan')
                             ->distinct()
                             ->get();
-        $divisi = M_divisi::all();
+        if (Auth::user()->divisi !='') {
+            $divisi = M_divisi::where('id','=',Auth::user()->divisi)->get();
+        }else{
+            $divisi = M_divisi::all();
+        }
+        $level=array('Non Shift 1'=>'Non Shift 1','Non Shift 2'=>'Non Shift 2','1'=>'0','2'=>'1','3'=>'2','4'=>'3','5'=>'4');
         $pend=array("S3"=>"S3","S2"=>"S2","S1"=>"S1","D4"=>"D4","D3"=>"D3","SMA"=>"SMA","SMP"=>"SMP");
         $jnskelamin=array("Laki-laki" => "Laki - laki","Perempuan" => "Perempuan");
-        return view('karyawan.edit',compact('karyawan','divisi','jabatan','jnskelamin','pend'));
+        return view('karyawan.edit',compact('karyawan','divisi','jabatan','jnskelamin','pend','level'));
     }
 
     public function update(Request $request, M_karyawan $karyawan)
@@ -114,7 +137,7 @@ class Karyawan extends Controller
     public function deletekary(Request $request)
     {
         M_karyawan::where('id', '=', $request->idKary)->delete();
-        Alert::success('Congrats', 'Data Berhasil dihapus');
+        Alert::success('Congrats', 'You\'ve Successfully Deleted Data');
         return redirect()->route('karyawan.index')
                         ->with('success','Product deleted successfully');
     }

@@ -18,6 +18,10 @@ class CreateKaryawanTable extends Migration
             $table->string('nik');
             $table->string('nama_karyawan');
             $table->string('pendidikan');
+            $table->string('seminar');
+            $table->string('nm_darurat');
+            $table->string('hub_darurat');
+            $table->string('telp_darurat');
             $table->string('level_karyawan');
             $table->string('divisi_karyawan');
             $table->string('jabatan');

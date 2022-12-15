@@ -24,6 +24,30 @@
         <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
         </div>
         <div class="form-group">
+        <label>Unit Kerja</label>
+        <select name="divisi" id="divisi" class="form-control select2bs4" required="">
+            <option value="">Pilih Data</option>
+            @foreach($divisi as $div)
+                <option value="{{$div->id}}">{{$div->kode_divisi}} - {{$div->nama_divisi}}</option>
+            @endforeach
+        </select>
+        <div class="invalid-feedback">
+            Belum diisi !!
+        </div>
+        <div class="valid-feedback">
+            Oke
+        </div>
+        </div>
+        <!---->
+        <div class="form-group">
+        <label>Jabatan</label>
+        <select name="jabatan" id="jabatan" class="form-control select2bs4">
+            @foreach($jabatan as $jab)
+                <option value="{{$jab->jabatan}}">{{$jab->jabatan}}</option>
+            @endforeach
+        </select>
+        </div>
+        <div class="form-group">
         <label for="email">Email</label>
         <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
         </div>

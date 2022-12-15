@@ -9,6 +9,7 @@ use App\Models\M_karyawan;
 use App\Models\M_divisi;
 use App\Models\M_schedule;
 use App\Models\M_scheduleDetail;
+use App\Models\M_JamKerja;
 use DB;
 use Redirect;
 
@@ -21,13 +22,25 @@ class Schedule extends Controller
     public function index()
     {
         // $schedule = M_schedule::paginate(10);
-        $schedule =  DB::table('schedule')
-                    ->select('schedule.bulan_scheduler as bulan_scheduler','divisi.nama_divisi as nama_divisi','schedule.id as id')
-                    ->leftjoin('divisi', 'divisi.id', '=', 'schedule.divisi_scheduler')
-                    ->orderby('divisi.id','ASC')
-                    ->orderby('schedule.bulan_scheduler','ASC')
-                    ->get();
+        if (Auth::user()->divisi !='') {
+            $schedule =  DB::table('schedule')
+                        ->select('schedule.bulan_scheduler as bulan_scheduler','divisi.nama_divisi as nama_divisi','schedule.id as id')
+                        ->leftjoin('divisi', 'divisi.id', '=', 'schedule.divisi_scheduler')
+                        ->where('divisi_scheduler','=',Auth::user()->divisi)
+                        ->orderby('divisi.id','ASC')
+                        ->orderby('schedule.bulan_scheduler','ASC')
+                        ->get();
+        }else{
+            $schedule =  DB::table('schedule')
+                        ->select('schedule.bulan_scheduler as bulan_scheduler','divisi.nama_divisi as nama_divisi','schedule.id as id')
+                        ->leftjoin('divisi', 'divisi.id', '=', 'schedule.divisi_scheduler')
+                        ->orderby('divisi.id','ASC')
+                        ->orderby('schedule.bulan_scheduler','ASC')
+                        ->get();
+        }
         foreach ($schedule as $key => $value) {
+            $hNon1[$value->id] =  DB::table('schedule')->leftjoin('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule_detail.tanda','=','Non Shift 1')->where('schedule.id','=',$value->id)->count();
+            $hNon2[$value->id] =  DB::table('schedule')->leftjoin('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule_detail.tanda','=','Non Shift 2')->where('schedule.id','=',$value->id)->count();
             $hlvl1[$value->id] =  DB::table('schedule')->leftjoin('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule_detail.tanda','=','1')->where('schedule.id','=',$value->id)->count();
             $hlvl2[$value->id] =  DB::table('schedule')->leftjoin('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule_detail.tanda','=','2')->where('schedule.id','=',$value->id)->count();
             $hlvl3[$value->id] =  DB::table('schedule')->leftjoin('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule_detail.tanda','=','3')->where('schedule.id','=',$value->id)->count();
@@ -37,7 +50,7 @@ class Schedule extends Controller
         
         $arrbln=array('01' => "Januari",'02' => "Februari",'03' => "Maret",'04' => "April",'05' => "Mei",'06' => "Juni",'07' => "Juli",'08' => "Agustus",'09' => "Sepetember",'10' => "Oktober",'11' => "November",'12' => "Desember");
         if (Auth::check()) {
-            return view('schedule.table',compact('schedule','hlvl1','hlvl2','hlvl3','hlvl4','hlvl5','arrbln'))
+            return view('schedule.table',compact('schedule','hlvl1','hlvl2','hlvl3','hlvl4','hlvl5','arrbln','hNon1','hNon2'))
             ->with('i', (request()->input('page', 1) - 1) * 10);
         }else{
             return redirect('/');
@@ -47,7 +60,11 @@ class Schedule extends Controller
    
     public function create()
     {
-        $divisi = M_divisi::all();
+        if (Auth::user()->divisi !='') {
+            $divisi = M_divisi::where('id','=',Auth::user()->divisi)->get();
+        }else{
+            $divisi = M_divisi::all();
+        }
         $arrbln=array('01' => "Januari",'02' => "Februari",'03' => "Maret",'04' => "April",'05' => "Mei",'06' => "Juni",'07' => "Juli",'08' => "Agustus",'09' => "Sepetember",'10' => "Oktober",'11' => "November",'12' => "Desember");
         return view('schedule.add',compact('divisi','arrbln'));
     }
@@ -174,15 +191,31 @@ class Schedule extends Controller
                     'updated_at' => date('Y-m-d h:i:s')
                 ]);
             }
+            function insertNonSh($shid,$karID,$tgl,$sh,$tanda,$periodeGlobal){ ## Query Insert Detail
+                M_scheduleDetail::insert([
+                    'schedule_id' => $shid,
+                    'karyawanid' => $karID,
+                    'tanggal' => $tgl,
+                    'shift' => $sh,
+                    'tanda' => $tanda,
+                    'periode' => $periodeGlobal,
+                    'created_at' => date('Y-m-d h:i:s'),
+                    'updated_at' => date('Y-m-d h:i:s')
+                ]);
+            }
             $periodeGlobal=$request->tahun.'-'.$request->bulan;
             $hari= cal_days_in_month(CAL_GREGORIAN,$request->bulan,$request->tahun);
     
+            $Non1=cekjml($request->divisi_karyawan,'Non Shift 1');
+            $Non2=cekjml($request->divisi_karyawan,'Non Shift 2');
             $lvl1=cekjml($request->divisi_karyawan,'1');
             $lvl2=cekjml($request->divisi_karyawan,'2');
             $lvl3=cekjml($request->divisi_karyawan,'3');
             $lvl4=cekjml($request->divisi_karyawan,'4');
             $lvl5=cekjml($request->divisi_karyawan,'5');
     
+            $hNon1=$Non1->count();
+            $hNon2=$Non2->count();
             $hlvl1=$lvl1->count();
             $hlvl2=$lvl2->count();
             $hlvl3=$lvl3->count();
@@ -190,8 +223,7 @@ class Schedule extends Controller
             $hlvl5=$lvl5->count();
             $idsch=ambilid($request->bulan,$request->tahun,$request->divisi_karyawan);
 
-            
-
+           
             // foreach ($lvl1 as $nmkar) {
             //     $person[]=$nmkar->nama_karyawan;
             // }
@@ -329,7 +361,7 @@ class Schedule extends Controller
                 
             }
             $person=array();
-            for ($i=1; $i <=5 ; $i++) { 
+            for ($i=1; $i <=7 ; $i++) { 
             $empty=0;
                 $method=$request->metode.$i;
                 // print_r($method);
@@ -375,6 +407,41 @@ class Schedule extends Controller
                     foreach ($lvl5 as $nmkar) {
                         $person[]=$nmkar->id;
                     }
+                }elseif ($method=='insertlvl6') {
+                    if ($hNon1%4!=0) {
+                        Alert::error('Gagal', 'Jumlah Karyawan bukan kelipatan 4 Level 5!!!');
+                        return Redirect::back();
+                    }
+                    for ($g=1; $g <=$hari ; $g++) { 
+                        foreach ($Non1 as $nmkar) {
+                            $dayend[$g]=date('D', strtotime($periodeGlobal.'-'.sprintf("%02d",$g)));
+                            if ($dayend[$g]!='Sun' && $dayend[$g]!='Sat') {
+                                insertNonSh($idsch,$nmkar->id,$g,'Pagi0','Non Shift 1',$periodeGlobal);
+                            }else{
+                                insertNonSh($idsch,$nmkar->id,$g,'Libur','Non Shift 1',$periodeGlobal);
+                            }    
+                        }
+                    }
+                }elseif ($method=='insertlvl7') {
+                    if ($hNon2%4!=0) {
+                        Alert::error('Gagal', 'Jumlah Karyawan bukan kelipatan 4 Level 5!!!');
+                        return Redirect::back();
+                    }
+                    for ($x=1; $x <=$hari ; $x++) { 
+                        foreach ($Non2 as $nmkar2) {
+                            $dayend2[$x]=date('D', strtotime($periodeGlobal.'-'.sprintf("%02d",$x)));
+                            if ($dayend2[$x]!='Sun') {
+                                insertNonSh($idsch,$nmkar2->id,$x,'Pagi0','Non Shift 2',$periodeGlobal);
+                            }else{
+                                insertNonSh($idsch,$nmkar2->id,$x,'Libur','Non Shift 2',$periodeGlobal);
+                            }    
+                        }
+                    }
+                    // echo"<pre>";
+                    // print_r($Non2);
+                    // echo"<pre>";
+                    // print_r($method);
+                    // die();
                 }
                 ## Start Untuk Hitung Jumlah Pershift nya
                 if ($method=='insertlvl1') {
@@ -407,6 +474,14 @@ class Schedule extends Controller
                     if ($hlvl5==0) {
                         $empty=1;
                     }
+                }elseif ($method=='insertlvl6') {
+                    $bagian=$hNon1/4;
+                    $tanda=4;
+                    $empty=1;
+                }elseif ($method=='insertlvl7') {
+                    $bagian=$hNon2/4;
+                    $tanda=4;
+                    $empty=1;
                 }
                 ## END Untuk Hitung Jumlah Pershift nya
 
@@ -421,16 +496,25 @@ class Schedule extends Controller
                     $pengali=$hlvl4*2;
                 }elseif ($method=='insertlvl5') {
                     $pengali=$hlvl5*2;
+                }elseif ($method=='insertlvl6') {
+                    $pengali=$hNon1*2;
+                }elseif ($method=='insertlvl7') {
+                    $pengali=$hNon2*2;
                 }
                 ## END Untuk Hitung Jumlah dikali 2
+
+                // echo"<pre>";
+                // print_r($person);
+                // die();
+
                 if ($empty==0) {
-                    generateShift ($person,$bagian,$idsch,$hari,$pengali,$tanda,$periodeGlobal);
+                    generateShift ($person,$bagian,$idsch,$hari,$pengali,$tanda,$periodeGlobal); ## HARUS DINYALAKAN LAGI KALAU INI DI COMMENT
                 }
             }
             Alert::success('Congrats', 'Berhasil Generate');
 
             // return Redirect::back();
-            return redirect()->route('calendarview',$idsch);
+            return redirect()->route('calendarview',$idsch);  ## HARUS DINYALAKAN LAGI KALAU INI DI COMMENT
         } 
         ### END IF
     
@@ -441,12 +525,16 @@ class Schedule extends Controller
     public function show(M_schedule $schedule)
     {
         $divisi = M_divisi::all();
+        $hNon1 =  DB::table('karyawan')->leftjoin('divisi', 'divisi.id', '=', 'karyawan.divisi_karyawan')->where('divisi.id','=',$schedule->divisi_scheduler)->where('karyawan.level_karyawan','=','Non Shift 1')->count();
+        $hNon2 =  DB::table('karyawan')->leftjoin('divisi', 'divisi.id', '=', 'karyawan.divisi_karyawan')->where('divisi.id','=',$schedule->divisi_scheduler)->where('karyawan.level_karyawan','=','Non Shift 2')->count();
         $hlvl1 =  DB::table('karyawan')->leftjoin('divisi', 'divisi.id', '=', 'karyawan.divisi_karyawan')->where('divisi.id','=',$schedule->divisi_scheduler)->where('karyawan.level_karyawan','=','1')->count();
         $hlvl2 =  DB::table('karyawan')->leftjoin('divisi', 'divisi.id', '=', 'karyawan.divisi_karyawan')->where('divisi.id','=',$schedule->divisi_scheduler)->where('karyawan.level_karyawan','=','2')->count();
         $hlvl3 =  DB::table('karyawan')->leftjoin('divisi', 'divisi.id', '=', 'karyawan.divisi_karyawan')->where('divisi.id','=',$schedule->divisi_scheduler)->where('karyawan.level_karyawan','=','3')->count();
         $hlvl4 =  DB::table('karyawan')->leftjoin('divisi', 'divisi.id', '=', 'karyawan.divisi_karyawan')->where('divisi.id','=',$schedule->divisi_scheduler)->where('karyawan.level_karyawan','=','4')->count();
         $hlvl5 =  DB::table('karyawan')->leftjoin('divisi', 'divisi.id', '=', 'karyawan.divisi_karyawan')->where('divisi.id','=',$schedule->divisi_scheduler)->where('karyawan.level_karyawan','=','5')->count();
 
+        $ctNon1 =  DB::table('schedule')->leftjoin('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule.id','=',$schedule->id)->where('schedule_detail.tanda','=','Non Shift 1')->count();
+        $ctNon2 =  DB::table('schedule')->leftjoin('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule.id','=',$schedule->id)->where('schedule_detail.tanda','=','Non Shift 2')->count();
         $ctlvl1 =  DB::table('schedule')->leftjoin('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule.id','=',$schedule->id)->where('schedule_detail.tanda','=','1')->count();
         $ctlvl2 =  DB::table('schedule')->leftjoin('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule.id','=',$schedule->id)->where('schedule_detail.tanda','=','2')->count();
         $ctlvl3 =  DB::table('schedule')->leftjoin('schedule_detail', 'schedule_detail.schedule_id', '=', 'schedule.id')->where('schedule.id','=',$schedule->id)->where('schedule_detail.tanda','=','3')->count();
@@ -460,7 +548,7 @@ class Schedule extends Controller
 
         $arrbln=array('01' => "Januari",'02' => "Februari",'03' => "Maret",'04' => "April",'05' => "Mei",'06' => "Juni",'07' => "Juli",'08' => "Agustus",'09' => "Sepetember",'10' => "Oktober",'11' => "November",'12' => "Desember");
         
-        return view('schedule.show',compact('schedule','divisi','arrbln','hlvl1','hlvl2','hlvl3','hlvl4','hlvl5','ctlvl1','ctlvl2','ctlvl3','ctlvl4','ctlvl5','idDetail'));
+        return view('schedule.show',compact('schedule','divisi','arrbln','hlvl1','hlvl2','hlvl3','hlvl4','hlvl5','ctlvl1','ctlvl2','ctlvl3','ctlvl4','ctlvl5','idDetail','hNon1','hNon2','ctNon1','ctNon2'));
     }
 
     public function showcalendar($id)
@@ -570,6 +658,8 @@ class Schedule extends Controller
         // foreach ($kary as $key => $val) {
         //     $arrakary[$val->level_karyawan][$val->id]=$val->nama_karyawan;
         // }
+        
+
         $hari2=$first2->tanggal;
         foreach ($query as $key => $val) {
             for ($i=1; $i <= $hari2 ; $i++) { 
@@ -578,13 +668,35 @@ class Schedule extends Controller
                 }
             }
         }
+
+        $ctjam=M_JamKerja::where('deleted_at','=',NULL)->count();
+        if ($ctjam==0) {
+            
+        }else{
+            $jamkerja=M_JamKerja::where('deleted_at','=',NULL)->first();
+            $arrjam['Pagi0']=$jamkerja->pagi;
+            $arrjam['Siang']=$jamkerja->siang;
+            $arrjam['Malam']=$jamkerja->malam;
+            $arrjam['Libur']=0;
+            $arrjam['CT']=0;
+            $arrjam['A']=0;
+            $arrjam['Sakit']=0;
+            foreach ($query as $key => $val) {
+                for ($i=1; $i <= $hari2 ; $i++) { 
+                    if ($val->$i!='asu') {
+                        $arrperjam[$val->nama][$i][$val->$i]=$arrjam[substr($val->$i,0,5)];
+                        @$arrjmljam[$val->nama]+=$arrperjam[$val->nama][$i][$val->$i];
+                    }
+                }
+            }
+        }
        
         // }
         // echo"<pre>";
-        // print_r($data2);
+        // print_r($arrjmljam);
         // die();
         $j=1;
-        return view('schedule.calendar',compact('data2','first2','hari2','arrbln2','id','query','j'));
+        return view('schedule.calendar',compact('data2','first2','hari2','arrbln2','id','query','j','arrjmljam'));
     }
 
     public function editcalendar($id)
@@ -639,7 +751,11 @@ class Schedule extends Controller
    
     public function edit(M_schedule $schedule)
     {
-        $divisi = M_divisi::all();
+        if (Auth::user()->divisi !='') {
+            $divisi = M_divisi::where('id','=',Auth::user()->divisi)->get();
+        }else{
+            $divisi = M_divisi::all();
+        }
         $arrbln=array('01' => "Januari",'02' => "Februari",'03' => "Maret",'04' => "April",'05' => "Mei",'06' => "Juni",'07' => "Juli",'08' => "Agustus",'09' => "Sepetember",'10' => "Oktober",'11' => "November",'12' => "Desember");
         return view('schedule.edit',compact('schedule','arrbln','divisi'));
     }
@@ -651,9 +767,13 @@ class Schedule extends Controller
             'tahun' => 'required',
             'divisi_karyawan' => 'required',
         ]);
-    
-        $schedule->update($request->all());
-        Alert::success('Congrats', 'Data Berhasil diupdate');
+        $ceksch =  DB::table('schedule_detail')->where('schedule_id','=',$request->idEdit)->count();
+        if ($ceksch==0) {
+            DB::statement("UPDATE schedule SET bulan_scheduler = '".$request->tahun."-".$request->bulan."',divisi_scheduler = '".$request->divisi_karyawan."' WHERE id = '".$request->idEdit."' ");
+            Alert::success('Congrats', 'You\'ve Successfully Updated Data');
+        }else {
+            Alert::warning('Warning', 'Data Generate Schedule sudah ada mohon hapus terlebih dahulu !!!');
+        }
         return redirect()->route('schedule.index')
                         ->with('success','Product updated successfully');
     }
@@ -664,27 +784,27 @@ class Schedule extends Controller
 
         DB::statement("UPDATE schedule_detail SET shift = '".$request->shiftganti."' WHERE schedule_id = '".$request->iddetail."' AND karyawanid = '".$request->nmkarganti."' AND tanggal = '".$request->tglsch."' ");
 
-        Alert::success('Berhasil', 'Data berhasil terupdate');
+        Alert::success('Congrats', 'You\'ve Successfully Updated Data');
         return redirect()->route('calendarview',$request->iddetail);
     }
 
     public function destroy($id)
     {
         M_schedule::where('id', '=', $id)->delete();
-        Alert::success('Congrats', 'Data Berhasil dihapus');
+        Alert::success('Congrats', 'You\'ve Successfully Deleted Data');
         return redirect()->route('schedule.index')
                         ->with('success','Product deleted successfully');
     }
     public function deletedetail(Request $request)
     {
         M_scheduleDetail::where('schedule_id', '=', $request->idDetail)->delete();
-        Alert::success('Congrats', 'Data Berhasil dihapus');
+        Alert::success('Congrats', 'You\'ve Successfully Deleted Data');
         return Redirect::back();
     }
     public function deletedata(Request $request)
     {
         M_schedule::where('id', '=', $request->id_task)->delete();
-        Alert::success('Congrats', 'Data Berhasil dihapus');
+        Alert::success('Congrats', 'You\'ve Successfully Deleted Data');
         return redirect()->route('schedule.index')
                         ->with('success','Product deleted successfully');
     }

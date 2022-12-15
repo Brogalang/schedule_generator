@@ -22,6 +22,8 @@
             <tr>
             <th class="text-center">No</th>
             <th style="text-align:center">Nama</th>
+            <th style="text-align:center">Jabatan</th>
+            <th style="text-align:center">Unit Kerja</th>
             <th style="text-align:center">Email</th>
             <th style="text-align:center">Action</th>
             </tr>
@@ -31,6 +33,8 @@
         <tr>
             <td style="text-align:center">{{ ++$i }}</td>
             <td style="text-align:center">{{$role->name}}</td>
+            <td style="text-align:center">{{$role->jabatan}}</td>
+            <td style="text-align:center">{{$role->nama_divisi}}</td>
             <td style="text-align:center">{{$role->email}}</td>
             <td style="text-align:center">
                 {{--<form action="{{ route('divisi.destroy',$role->id) }}" method="POST">
@@ -38,7 +42,7 @@
                     @method('DELETE')--}}
                     <a class="btn btn-info" href="{{ route('administrator.edit',$role->id) }}" ><i class="fa fa-edit" title="Edit Data"></i></a>
                     <a class="btn btn-info" href="{{ route('rolemenu',$role->id) }}" ><i class="fa fa-plus" title="Tambah Role"></i></a>
-                    <button type="submit" class="btn btn-danger" onclick="deletediv('{{$role->id}}')"><i class="fa fa-trash" title="Delete Data"></i></button>
+                    <button type="submit" class="btn btn-danger" onclick="deletedata('{{$role->id}}')"><i class="fa fa-trash" title="Delete Data"></i></button>
                 {{--</form>--}}
             </td>
         </tr>
@@ -59,18 +63,18 @@
 @endsection
 
 @push('javascript')
-<!-- <script>
-    function deletediv(idDiv) {
+<script>
+    function deletedata(idData) {
         alertify.confirm('Warning', 'Are you sure ??', 
         function(){ 
             alertify.success('Ok') 
             $.ajax({
-                data: 'idDiv='+idDiv,
-                url: "{{ route('deletediv') }}",
+                data: 'idData='+idData,
+                url: "{{ route('deletedata') }}",
                 type: "GET",
                 datatype : "json",
                 success: function(response) {
-                    window.location.href = "divisi";
+                    window.location.href = "administrator";
                 },
                 error: function(response) {
                 }
@@ -79,5 +83,5 @@
             alertify.error('Cancel')
         })
     }
-</script> -->
+</script>
 @endpush

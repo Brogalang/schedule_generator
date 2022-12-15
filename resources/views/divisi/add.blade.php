@@ -3,10 +3,10 @@
 @section('content')
 @include('sweetalert::alert')
 <div class="section-header">
-    <h1>Divisi</h1>
+    <h1>Unit Kerja</h1>
     <div class="section-header-breadcrumb">
     <div class="breadcrumb-item active"><a href="{{route('home')}}">Dashboard</a></div>
-    <div class="breadcrumb-item"><a href="{{route('divisi.index')}}">Divisi</a></div>
+    <div class="breadcrumb-item"><a href="{{route('divisi.index')}}">Unit Kerja</a></div>
     <div class="breadcrumb-item">Add</div>
     </div>
 </div>
@@ -16,11 +16,11 @@
     <form class="needs-validation" action="{{ route('divisi.store') }}" method="POST" novalidate="">
     @csrf
     <div class="card-header">
-        <h4>Tambah Divisi</h4>
+        <h4>Tambah Unit Kerja</h4>
     </div>
     <div class="card-body">
         <div class="form-group">
-        <label>Kode Divisi</label>
+        <label>Kode Unit Kerja</label>
         <input type="text" class="form-control" name="kode_divisi" required="">
         <div class="invalid-feedback">
             Belum diisi !!
@@ -30,7 +30,7 @@
         </div>
         </div>
         <div class="form-group">
-        <label>Nama Divisi</label>
+        <label>Nama Unit Kerja</label>
         <input type="text" class="form-control" name="nama_divisi" required="">
         <div class="invalid-feedback">
             Belum diisi !!
